@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-*
+.env
+.env.local
+
+# Node/Build (if using Divi build tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+
+# Dependency locks (optional - include if needed)
+# package-lock.json
+# composer.lock
+
+# Compiled/Cache files
+*.log
+.cache/
+
+# SFTP config (contains credentials)
+sftp.json
