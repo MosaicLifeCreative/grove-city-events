@@ -194,11 +194,6 @@ add_filter( 'sgo_js_minify_exclude', 'exclude_tec_scripts_from_optimization' );
 add_filter( 'sgo_js_async_exclude', 'exclude_tec_scripts_from_optimization' );
 add_filter( 'sgo_javascript_combine_exclude', 'exclude_tec_scripts_from_optimization' );
 
-add_action( 'wp_footer', function() {
-    $exclude_list = apply_filters( 'sgo_js_minify_exclude', [] );
-    echo '<!-- Exclusion List: ' . implode( ', ', $exclude_list ) . ' -->';
-});
-
 // Create member menu shortcode
 function render_event_partner_menu() {
     if (is_user_logged_in()) {
@@ -223,12 +218,53 @@ add_action('wp_head', function() {
     }
 });
 
-// Clear cache on login
-add_action( 'um_on_login', function( $user_id ) {
-    if ( function_exists( 'wpgs_purge_cache' ) ) {
-        wpgs_purge_cache( home_url() );
+/* ==========================
+   CACHE MANAGEMENT
+   Aggressive purging for SiteGround Dynamic/File-Based Caching
+   ========================== */
+
+// Central cache purge function
+function gce_purge_all_caches() {
+    if (function_exists('wpgs_purge_cache')) {
+        wpgs_purge_cache(home_url());
     }
-}, 10, 1 );
+}
+
+// Clear cache on user login
+add_action('um_on_login', function($user_id) {
+    gce_purge_all_caches();
+}, 10, 1);
+
+// Purge cache when Events Calendar events are published/updated/deleted
+add_action('save_post_tribe_events', function($post_id) {
+    // Avoid infinite loops on autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    gce_purge_all_caches();
+}, 20);
+
+add_action('trash_post_tribe_events', 'gce_purge_all_caches', 20);
+add_action('untrash_post_tribe_events', 'gce_purge_all_caches', 20);
+
+// Purge when organizers/venues are updated (affects event pages)
+add_action('save_post_tribe_organizer', function($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    gce_purge_all_caches();
+}, 20);
+
+add_action('save_post_tribe_venue', function($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    gce_purge_all_caches();
+}, 20);
+
+/* ==========================
+   End Cache Management
+   ========================== */
 
 /* Prevent Bloom from recording stats
 add_filter('et_bloom_should_record_stats', '__return_false');*/
@@ -305,7 +341,7 @@ add_action('template_redirect', function () {
     $desc  = wp_strip_all_tags(get_the_excerpt($e) ?: get_post_field('post_content', $e));
     echo "<article class='cl-item'>
             <h2>$title</h2>
-            <p><strong>$when</strong>".($venue ? " � $venue" : "")."</p>
+            <p><strong>$when</strong>".($venue ? " — $venue" : "")."</p>
             <p>$desc</p>
             <p><a href='$link'>Details</a></p>
           </article>";
@@ -314,7 +350,7 @@ add_action('template_redirect', function () {
   exit;
 });
 
-// One-time: visit Settings ? Permalinks (or run this once after deploy)
+// One-time: visit Settings → Permalinks (or run this once after deploy)
 register_activation_hook(__FILE__, function(){ flush_rewrite_rules(); });
 register_deactivation_hook(__FILE__, function(){ flush_rewrite_rules(); });
 
@@ -358,6 +394,5 @@ add_action('template_redirect', function () {
     echo '</urlset>';
     exit;
 });
-
 
 ?>
