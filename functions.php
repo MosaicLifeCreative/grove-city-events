@@ -395,4 +395,104 @@ add_action('template_redirect', function () {
     exit;
 });
 
+// Add Chatling to all pages except embeds
+function gce_add_chatling() {
+    // Get current URL path
+    $current_path = $_SERVER['REQUEST_URI'];
+    
+    // Don't load on embed pages
+    if (is_page(array('list-view-embed', 'week-view-embed', 'map-view-embed')) || 
+        strpos($current_path, '/calendar-embed/') !== false) {
+        return;
+    }
+    ?>
+    <script>
+    window.chtlConfig = { chatbotId: "9391787989" }
+    </script>
+    <script async data-id="9391787989" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    <?php
+}
+add_action('wp_head', 'gce_add_chatling');
+
+// Disable CF7 ReCaptcha on embed pages
+function gce_disable_recaptcha_on_embeds() {
+    // Get current URL path
+    $current_path = $_SERVER['REQUEST_URI'];
+    
+    // Don't load on embed pages
+    if (is_page(array('list-view-embed', 'week-view-embed', 'map-view-embed')) || 
+        strpos($current_path, '/calendar-embed/') !== false) {
+        
+        // Remove CF7 ReCaptcha scripts
+        remove_action('wp_enqueue_scripts', 'wpcf7_recaptcha_enqueue_scripts', 20);
+        add_filter('wpcf7_load_js', '__return_false');
+        add_filter('wpcf7_load_css', '__return_false');
+    }
+}
+add_action('wp_enqueue_scripts', 'gce_disable_recaptcha_on_embeds', 1);
+
+// Auto-resize script for embed pages
+function gce_embed_resize_script() {
+    $current_path = $_SERVER['REQUEST_URI'];
+    
+    if (is_page(array('list-view-embed', 'week-view-embed', 'map-view-embed')) || 
+        strpos($current_path, '/calendar-embed/') !== false) {
+        ?>
+        <script>
+        (function() {
+            function sendHeight() {
+                var height = document.body.scrollHeight;
+                window.parent.postMessage({
+                    type: 'gce-resize',
+                    height: height
+                }, '*');
+            }
+            
+            // Send height on load
+            window.addEventListener('load', sendHeight);
+            
+            // Send height when content changes
+            setInterval(sendHeight, 500);
+        })();
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'gce_embed_resize_script');
+
+// Hide social sharing on embed pages
+function gce_hide_social_on_embeds() {
+    $current_path = $_SERVER['REQUEST_URI'];
+    
+    if (is_page(array('list-view-embed', 'week-view-embed', 'map-view-embed')) || 
+        strpos($current_path, '/calendar-embed/') !== false) {
+        echo '<style>
+            .et_social_sidebar_networks { display: none !important; }
+        </style>';
+    }
+}
+add_action('wp_head', 'gce_hide_social_on_embeds');
+
+// Force event links to open in new tab on embed pages
+function gce_force_links_new_tab() {
+    $current_path = $_SERVER['REQUEST_URI'];
+    
+    if (is_page(array('list-view-embed', 'week-view-embed', 'map-view-embed'))) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all event links
+            var eventLinks = document.querySelectorAll('.tribe-events-calendar-list__event-title-link, .tribe-events-calendar-list__event-featured-image-link, a[href*="/event/"]');
+            
+            eventLinks.forEach(function(link) {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            });
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'gce_force_links_new_tab');
+
 ?>
