@@ -39,8 +39,6 @@ add_filter( 'tribe_community_events_max_file_size_allowed', function() {
     return 1048576; // 1MB
 });
 
-
-
 // Adds Monarch sharing shortcode
 function monarchShortcode(){
     $monarch = $GLOBALS['et_monarch'];
@@ -56,137 +54,13 @@ function get_events( $data, $args, $full ): \WP_Query {
     return tribe_get_events( $args, $full );
 }
 
-/* ==========================
-   WooCommerce-specific code
-   Wrapped for safe deactivation
-   ========================== */
-if ( class_exists( 'WooCommerce' ) ) {
-
-    // Disable zoom effect on all WooCommerce product images
-    add_action( 'wp', function() {
-        remove_theme_support( 'wc-product-gallery-zoom' );
-    }, 99 );
-
-    // WooCommerce Image Sizes
-    add_filter('woocommerce_get_image_size_gallery_thumbnail', function($size) {
-        return array(
-            'width'  => 300,
-            'height' => 300,
-            'crop'   => 1,
-        );
-    });
-
-    // Change product image(s) for Facebook
-    add_action('wp_head', function() {
-        if (is_product() && get_the_ID() == 7748) {
-            echo '<meta property="og:image" content="https://grovecityevents.com/wp-content/uploads/2024/10/summer24-recap-fb.png" />';
-            echo '<meta property="og:image:width" content="1200" />';
-            echo '<meta property="og:image:height" content="630" />';
-        }
-    });
-
-    // Update WooCommerce Schema
-    add_filter('woocommerce_structured_data_product_offer', function($markup, $product) {
-        // Add return policy
-        $markup['hasMerchantReturnPolicy'] = array(
-            "@type" => "MerchantReturnPolicy",
-            "returnPolicyCategory" => "https://schema.org/MerchantReturnFiniteReturnWindow",
-            "merchantReturnDays" => 14,
-            "applicableCountry" => "US",
-            "merchantReturnLink" => "https://grovecityevents.com/refund-policy",
-            "returnFees" => "https://schema.org/ReturnShippingFees",
-            "returnShippingFeesAmount" => array(
-                "@type" => "MonetaryAmount",
-                "value" => "6.00",
-                "currency" => "USD"
-            ),
-            "returnMethod" => "https://schema.org/ReturnByMail"
-        );
-
-        // Add shipping details
-        $markup['shippingDetails'] = array(
-            "@type" => "OfferShippingDetails",
-            "shippingRate" => array(
-                "@type" => "MonetaryAmount",
-                "value" => "6.00",
-                "currency" => "USD"
-            ),
-            "deliveryTime" => array(
-                "@type" => "ShippingDeliveryTime",
-                "handlingTime" => array(
-                    "@type" => "QuantitativeValue",
-                    "minValue" => "1",
-                    "maxValue" => "2",
-                    "unitCode" => "d"
-                ),
-                "transitTime" => array(
-                    "@type" => "QuantitativeValue",
-                    "minValue" => "3",
-                    "maxValue" => "5",
-                    "unitCode" => "d"
-                )
-            ),
-            "shippingDestination" => array(
-                "@type" => "DefinedRegion",
-                "addressCountry" => "US"
-            )
-        );
-
-        return $markup;
-    }, 10, 2);
-
-    // Apply coupon code via URL
-    add_action('init', function() {
-        if (isset($_GET['coupon_code'])) {
-            $coupon_code = sanitize_text_field($_GET['coupon_code']);
-            WC()->session->set('applied_coupon_code', $coupon_code);
-        }
-    });
-
-    // Apply saved coupon code before main content
-    add_action('woocommerce_before_main_content', function() {
-        if (WC()->session && WC()->session->get('applied_coupon_code')) {
-            $coupon_code = WC()->session->get('applied_coupon_code');
-            if (!WC()->cart->has_discount($coupon_code)) {
-                WC()->cart->apply_coupon($coupon_code);
-            }
-        }
-    });
-
-    // Ensure coupon is applied on add to cart
-    add_action('woocommerce_add_to_cart', function() {
-        if (WC()->session && WC()->session->get('applied_coupon_code')) {
-            $coupon_code = WC()->session->get('applied_coupon_code');
-            if (!WC()->cart->has_discount($coupon_code)) {
-                WC()->cart->apply_coupon($coupon_code);
-            }
-        }
-    }, 10, 6);
-
-    // Clear applied coupon code
-    add_action('woocommerce_cart_updated', function() {
-        if (WC()->session && WC()->session->get('applied_coupon_code') && WC()->cart->has_discount(WC()->session->get('applied_coupon_code'))) {
-            WC()->session->__unset('applied_coupon_code');
-        }
-    });
-}
-
-/* ==========================
-   End WooCommerce section
-   ========================== */
-
 // Exclude The Events Calendar scripts from SiteGround Optimizer defer/minify
 function exclude_tec_scripts_from_optimization( $exclude_list ) {
     $tec_scripts = [
         '/wp-content/plugins/the-events-calendar/src/resources/js/tribe-events.js',
         '/wp-content/plugins/events-calendar-pro/src/resources/js/tribe-events-pro.js',
-        '/wp-content/plugins/event-tickets/src/resources/js/tickets.js',
-        '/wp-content/plugins/event-tickets-plus/src/resources/js/tickets-plus.js',
         '/wp-content/plugins/the-events-calendar-filterbar/src/resources/js/filter-bar.js',
-        '/wp-content/plugins/events-virtual/src/resources/js/virtual-events.js',
         '/wp-content/plugins/the-events-calendar-community-events/src/resources/js/community-events.js',
-        '/wp-content/plugins/the-events-calendar-community-events-tickets/src/resources/js/community-tickets.js',
-        '/wp-content/plugins/the-events-calendar-eventbrite-tickets/src/resources/js/eventbrite-tickets.js',
     ];
     return array_merge( $exclude_list, $tec_scripts );
 }
@@ -265,9 +139,6 @@ add_action('save_post_tribe_venue', function($post_id) {
 /* ==========================
    End Cache Management
    ========================== */
-
-/* Prevent Bloom from recording stats
-add_filter('et_bloom_should_record_stats', '__return_false');*/
 
 // Fix featured image links in The Events Calendar
 add_filter( 'tribe_template_html:events/v2/list/event/featured-image', function ( $html, $file, $name, $template ) {

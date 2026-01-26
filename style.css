@@ -1,13 +1,74 @@
 ﻿/*
- Theme Name:     Divi Child Theme - Grove City Events
+ Theme Name:     Divi Child Theme - Grove City Events Staging
  Theme URI:      https://www.elegantthemes.com/gallery/divi/
  Description:    Divi Child Theme
  Author:         Elegant Themes
  Author URI:     https://www.elegantthemes.com
  Template:       Divi
- Version:        1.0.1
+ Version:        1.0.5
 */
- 
+
+/* CSS CUSTOM PROPERTIES */
+:root {
+	/* Brand Colors */
+	--color-primary: #334aff;
+	--color-primary-dark: #2333b2;
+	--color-primary-darker: #1a2238;
+	--color-primary-light: #5c6eff;
+	--color-primary-medium: #2a3dd8;
+	--color-accent-orange: #FF6A3D;
+	--color-accent-pink: #EA5072;
+	--color-accent-purple: #B75292;
+	--color-gold: #d4a53a;
+	
+	/* Neutrals */
+	--color-white: #ffffff;
+	--color-black: #000000;
+	--color-text: #333333;
+	--color-gray-lightest: #fafafa;
+	--color-gray-lighter: #f8f8fb;
+	--color-gray-light: #f7f7f7;
+	--color-gray: #e0e0e0;
+	--color-gray-medium: #d5d5d5;
+	--color-gray-dark: #666666;
+	
+	/* Borders */
+	--color-border-light: #ececec;
+	--color-border: #ddd;
+	--color-border-medium: #ccc;
+	--color-border-dark: #dededf;
+	
+	/* Alerts */
+	--color-info: #5a9bd8;
+	--color-success: green;
+	--color-error: red;
+	
+	/* Spacing */
+	--space-xs: 5px;
+	--space-sm: 10px;
+	--space-md: 15px;
+	--space-lg: 20px;
+	--space-xl: 22px;
+	--space-2xl: 28px;
+	
+	/* Border Radius */
+	--radius-sm: 4px;
+	--radius-md: 5px;
+	--radius-lg: 8px;
+	--radius-xl: 10px;
+	--radius-2xl: 15px;
+	--radius-3xl: 22px;
+	--radius-round: 50%;
+	
+	/* Transitions */
+	--transition-fast: 0.1s ease-in-out;
+	--transition-normal: 0.2s ease;
+	--transition-smooth: 0.3s ease;
+	
+	/* Gradients */
+	--gradient-brand: linear-gradient(to right, var(--color-accent-orange), var(--color-accent-pink), var(--color-accent-purple));
+}
+
 /* =Theme customization starts here
 ------------------------------------------------------- */
 
@@ -21,7 +82,7 @@ body, html {
     overflow-x: hidden !important;
 }
 a { 
-	color: white;
+	color: var(--color-white);
 	text-decoration: none;
 }
 
@@ -30,8 +91,8 @@ a {
 }
 
 ::selection {
-	background: #334aff;
-	color: white;
+	background: var(--color-primary);
+	color: var(--color-white);
 }
 
 .blurryface {
@@ -41,12 +102,10 @@ a {
 ul {
 	list-style-type:unset !important;
 	list-style:circle !important;
-	color:black;
+	color: var(--color-black);
 }
 
 /* TOP BAR */
-/* Reset styles for arrows on the call-out bar slider to solve vertical alignment issues on smaller screens */
-
 #call-out-bar {
     position: relative;
 }
@@ -61,25 +120,16 @@ ul {
     font-size: 25px;
     position: absolute;
     top: 50% !important;
-	color: #d4a53a;
-    transform: translateY(45%) !important; /* Vertically centers the arrows with the content */
+	color: var(--color-gold);
+    transform: translateY(45%) !important;
 }
 
 #call-out-bar .et-pb-slider-arrows a.et-pb-arrow-prev {
-    left: 22px;
+    left: var(--space-xl);
 }
 
 #call-out-bar .et-pb-slider-arrows a.et-pb-arrow-next {
-    right: 22px;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    #call-out-bar .et-pb-slider-arrows a.et-pb-arrow-prev,
-    #call-out-bar .et-pb-slider-arrows a.et-pb-arrow-next {
-        top: 50% !important;
-        transform: translateY(45%) !important; /* Ensures arrows stay vertically centered on smaller screens */
-    }
+    right: var(--space-xl);
 }
 
 /* HEADERS */
@@ -91,83 +141,49 @@ h1, h2, h3, h4, h5 {
 }
 
 /* GLOBAL MENU */
-/* Header Container */
 .header-container {
 	display: flex;
-	align-items: center; /* Vertically centers both hamburger and text */
+	align-items: center;
 	padding: 0;
 }
 
-/* Global Hamburger Menu */
 .global-menu-hamburger {
 	cursor: pointer;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 24px; /* Compact width for hamburger menu */
+	width: 24px;
 	height: 18px;
-	margin-right: 28px; /* Space between hamburger and text */
-	position: relative; /* To position the pseudo-element */
-	transition: background-color 0.2s ease; /* Smooth transition for the hover effect */
+	margin-right: var(--space-2xl);
+	position: relative;
+	transition: background-color var(--transition-normal);
 	z-index: 10;
 }
 
-@media (max-width: 768px) {
-	.global-menu-hamburger {
-		margin-left: 10px;
-	}
-}
-
-/* Circle on Hover */
 .global-menu-hamburger::before {
 	content: '';
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 42px; /* Size of the circle */
+	width: 42px;
 	height: 42px;
-	background-color: rgba(255, 255, 255, 0.1); /* Semi-opaque white */
-	border-radius: 50%; /* Makes it a circle */
-	opacity: 0; /* Start hidden */
-	transition: opacity 0.2s ease; /* Smooth fade-in */
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: var(--radius-round);
+	opacity: 0;
+	transition: opacity var(--transition-normal);
 }
 
 .global-menu-hamburger:hover::before {
 	opacity: 1;
 }
 
-/* Global Hamburger Lines */
 .global-menu-line {
 	height: 3px;
-	width: 100%; /* Matches the width of the container */
-	background-color: white;
+	width: 100%;
+	background-color: var(--color-white);
 	border-radius: 9px;
-	transition: 0.1s ease-in-out;
-}
-
-/* Site Title */
-@media (max-width: 768px) {
-	.site-title {
-		display: none !important;
-	}
-
-	#wordmark-container {
-		display: flex !important;
-		position: absolute;
-		width: 100%;
-		margin: auto;
-	}
-}
-
-@media (min-width: 768px) {
-	.site-title {
-		display: flex !important;
-	}
-
-	#wordmark-container {
-		display: none !important;
-	}
+	transition: var(--transition-fast);
 }
 
 #header-container, #wordmark-container {
@@ -177,45 +193,36 @@ h1, h2, h3, h4, h5 {
 
 .site-title {
 	display: flex;
-	flex-direction: column; /* Allows the logo text to stack naturally */
-	line-height: 1.2; /* Adjusts line spacing for text */
-	color: white; /* White color for "Grove City" part of the text */
+	flex-direction: column;
+	line-height: 1.2;
+	color: var(--color-white);
 }
 
-/* Global Menu Container */
 .global-menu-container {
 	position: fixed;
 	top: 0;
-	left: -100%; /* Start off-canvas */
+	left: -100%;
 	width: 37vw;
 	max-width: 450px;
 	height: 100vh;
-	background-color: rgba(26, 34, 56, 0.8); /* Dark, semi-transparent background */
+	background-color: rgba(26, 34, 56, 0.8);
 	backdrop-filter: blur(5px) saturate(180%);
 	transition: left 0.4s ease;
 	z-index: 1000;
 }
 
-	.global-menu-container.open {
-		left: 0; /* Slide into view */
-	}
-
-@media (max-width: 768px) {
-	.global-menu-container {
-		width: 100vw;
-		max-width: 100vw;
-	}
+.global-menu-container.open {
+	left: 0;
 }
 
-/* Menu Header with Close Button */
 .menu-header {
-	padding: 20px;
+	padding: var(--space-lg);
 	text-align: right;
 }
 
 .close-btn {
 	font-size: 24px;
-	color: white;
+	color: var(--color-white);
 	cursor: pointer;
 }
 
@@ -224,54 +231,50 @@ h1, h2, h3, h4, h5 {
 	margin:-25px 0 0 35px;
 }
 
-/* Menu Content */
 .menu-content {
-	padding: 0; /* Remove padding to let hover backgrounds extend fully */
+	padding: 0;
 	display: flex;
 	flex-direction: column;
 }
 
-/* Global Menu Item */
 .global-menu-item {
-	color: white !important;
+	color: var(--color-white) !important;
 	font-size: 18px !important;
-	padding: 10px 50px; /* Add padding for space between text and edges */
+	padding: var(--space-sm) 50px;
 	text-decoration: none;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition: background-color var(--transition-smooth), color var(--transition-smooth);
 }
 
-	.global-menu-item:hover {
-		color: #ff6a3d !important; /* Highlight text on hover */
-		background-color: #1a2238; /* Add background color on hover */
-	}
+.global-menu-item:hover {
+	color: var(--color-accent-orange) !important;
+	background-color: var(--color-primary-darker);
+}
 
-/* Submenu toggle within global menu */
 .global-menu-container .submenu-toggle {
 	cursor: pointer;
 	font-weight: bold;
 	display: flex;
 	align-items: center;
-	padding: 10px 50px; /* Add padding for space between text and edges */
-	color: white;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	padding: var(--space-sm) 50px;
+	color: var(--color-white);
+	transition: background-color var(--transition-smooth), color var(--transition-smooth);
 }
 
-	.global-menu-container .submenu-toggle:hover {
-		background-color: #1a2238;
-	}
+.global-menu-container .submenu-toggle:hover {
+	background-color: var(--color-primary-darker);
+}
 
-	.global-menu-container .submenu-toggle .submenu-caret {
-		color: white;
-		transform: rotate(-90deg);
-		margin-left: 10px;
-		font-size: 2rem;
-	}
+.global-menu-container .submenu-toggle .submenu-caret {
+	color: var(--color-white);
+	transform: rotate(-90deg);
+	margin-left: var(--space-sm);
+	font-size: 2rem;
+}
 
-	.global-menu-container .submenu-toggle.open .submenu-caret {
-		transform: rotate(90deg);
-	}
+.global-menu-container .submenu-toggle.open .submenu-caret {
+	transform: rotate(90deg);
+}
 
-/* Submenu */
 .global-menu-container .submenu {
 	display: none;
 	flex-direction: column;
@@ -280,68 +283,65 @@ h1, h2, h3, h4, h5 {
 }
 
 .global-menu-container .submenu-item {
-	color: white;
+	color: var(--color-white);
 	font-size: 18px;
-	padding: 10px 70px;
+	padding: var(--space-sm) 70px;
 	text-decoration: none;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition: background-color var(--transition-smooth), color var(--transition-smooth);
 }
 
-	.global-menu-container .submenu-item:hover {
-		color: #ff6a3d;
-		background-color: #1a2238;
-	}
+.global-menu-container .submenu-item:hover {
+	color: var(--color-accent-orange);
+	background-color: var(--color-primary-darker);
+}
 
 .global-menu-container .submenu.open {
 	display: flex;
 }
 
-/* Event Partner Menu */
 .event-partner-menu {
-	margin-bottom: 28px;
+	margin-bottom: var(--space-2xl);
 }
 
-	.event-partner-menu .global-menu-item {
-		display: block;
-		color: white;
-		font-size: 18px;
-		padding: 10px 50px;
-		text-decoration: none;
-		transition: background-color 0.3s ease, color 0.3s ease;
-	}
+.event-partner-menu .global-menu-item {
+	display: block;
+	color: var(--color-white);
+	font-size: 18px;
+	padding: var(--space-sm) 50px;
+	text-decoration: none;
+	transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
 
-		.event-partner-menu .global-menu-item:hover {
-			color: #ff6a3d;
-			background-color: #1a2238;
-		}
+.event-partner-menu .global-menu-item:hover {
+	color: var(--color-accent-orange);
+	background-color: var(--color-primary-darker);
+}
 
-	.event-partner-menu h3 {
-		color: white;
-		font-size: 18px;
-		margin-top: 20px;
-		margin-bottom: 10px;
-		padding: 0 35px;
-		font-weight: bold;
-	}
+.event-partner-menu h3 {
+	color: var(--color-white);
+	font-size: 18px;
+	margin-top: var(--space-lg);
+	margin-bottom: var(--space-sm);
+	padding: 0 35px;
+	font-weight: bold;
+}
 
-/* Menu Icon Styles */
 .menu-content .material-symbols-outlined {
-	font-size: 22px;
-	margin-right: 10px;
+	font-size: var(--space-xl);
+	margin-right: var(--space-sm);
 	vertical-align: middle;
-	color: white;
-	transition: color 0.3s ease;
+	color: var(--color-white);
+	transition: color var(--transition-smooth);
 }
 
 .global-menu-item:hover .material-symbols-outlined,
 .submenu-item:hover .material-symbols-outlined {
-	color: #ff6a3d;
+	color: var(--color-accent-orange);
 }
-
 
 /* Gradient Text */
 .gradtext {
-	background-image: linear-gradient(to right, #FF6A3D, #EA5072, #B75292);
+	background-image: var(--gradient-brand);
 	color: transparent;
 	background-clip: text;
 }
@@ -349,9 +349,9 @@ h1, h2, h3, h4, h5 {
 /* Body Links */
 .bodylink a {
 	position: relative;
-	color: #333; /* Link text color */
+	color: var(--color-text);
 	text-decoration: none;
-	padding-bottom: 2px; /* Space for the animated border */
+	padding-bottom: 2px;
 }
 
 .bodylink a::after {
@@ -361,8 +361,8 @@ h1, h2, h3, h4, h5 {
 	left: 0;
 	width: 0;
 	height: 4px;
-	background-image: linear-gradient(to right, #FF6A3D, #EA5072, #B75292);
-	transition: width 0.3s ease; /* Animation transition */
+	background-image: var(--gradient-brand);
+	transition: width var(--transition-smooth);
 }
 
 .bodylink a:hover::after {
@@ -381,9 +381,8 @@ h1, h2, h3, h4, h5 {
 	left: 0;
 	width: 100%;
 	height: 0;
-	/*background-color: #EA5072;*/
-	background-image: linear-gradient(to right, #FF6A3D, #EA5072, #B75292);
-	transition: height 0.3s ease;
+	background-image: var(--gradient-brand);
+	transition: height var(--transition-smooth);
 	z-index: -1;
 	clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 0% 100%);
 }
@@ -400,24 +399,20 @@ h1, h2, h3, h4, h5 {
 }
 
 /* Scroll Down Animation */
-/* CSS for the scroll indicator container */
 .scroll-indicator {
 	display: flex;
 	justify-content:center;
 }
 
-/* CSS for each caret */
 .caret {
 	width: 25px;
 	height: 25px;
 	border-style: solid;
-	/*border-color: #334aff;*/
 	border-width: 8px 8px 0 0;
 	transform: rotate(135deg);
-	margin: 0 10px;
+	margin: 0 var(--space-sm);
 }
 
-/* CSS for keyframe animation */
 @keyframes wave {
 	0%, 100% {
 		transform: translateY(0) rotate(135deg);
@@ -427,112 +422,34 @@ h1, h2, h3, h4, h5 {
 		transform: translateY(-20px) rotate(135deg);
 	}
 }
+
 .caret:nth-child(1) {
-	border-color:#FF6A3D;
+	border-color: var(--color-accent-orange);
 	animation: wave 1.5s ease-in-out infinite 0s;
 }
 
 .caret:nth-child(2) {
-	border-color: #EA5072;
+	border-color: var(--color-accent-pink);
 	animation: wave 1.5s ease-in-out infinite 0.2s;
 }
 
 .caret:nth-child(3) {
-	border-color: #B75292;
+	border-color: var(--color-accent-purple);
 	animation: wave 1.5s ease-in-out infinite .4s;
-}
-
-
-/* SUBMIT EVENT BUTTON */
-.button-container {
-	position: fixed;
-	bottom: 120px;
-	right: 37px;
-}
-
-.expandable-button {
-	background: url('/wp-content/uploads/2024/04/menu-btn.png');
-	border: none;
-	cursor: pointer;
-	border-radius: 50%;
-	position: relative;
-	overflow: visible;
-	height: 50px;
-	width: 50px;
-	transition: ease-in-out .2s;
-	transform-origin: center;
-}
-
-.expandable-button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-}
-
-.speech-bubble {
-	position: absolute;
-	/*top: -475px;*/
-	bottom:90px;
-	right: -3px;
-	background-color: #334AFF;
-	border: solid #2333b2;
-	border-width: 0 0 5px 5px;
-	border-radius: 15px;
-	padding: 45px 28px 25px 28px;
-	display: none;
-	z-index: 1;
-	max-width: 400px;
-	width: 90vw;
-	height: fit-content;
-	text-align: left;
-	color: white;
-	box-shadow: 0px 0px 20px rgba(0,0,0,.37);
-}
-
-.speech-bubble h2 {
-	color:white !important;
-	font-weight:bold;
-	font-size:1.25rem;
-	margin-bottom:15px;
-}
-
-.speech-bubble::before {
-	content: '';
-	position: absolute;
-	bottom: -45px;
-	right: 5px;
-	border-width: 22px;
-	border-style: solid;
-	border-color: transparent transparent #2333b2 transparent;
-	transform: rotate(180deg);
 }
 
 /* STYLES FOR INDIVIDUAL PAGES */
 
 /* Custom Category Pages */
 .category-banner {
-    font-size: 3rem; /* Adjust as needed */
-    letter-spacing: 0.5rem; /* Adjust as needed */
-	color:white;
+    font-size: 3rem;
+    letter-spacing: 0.5rem;
+	color: var(--color-white);
     white-space: nowrap;
     width: 100vw;
     text-align: center;
     position: relative;
 	font-weight:800;
-}
-
-/* Media query for smaller screens (below 768px) */
-@media (max-width: 768px) {
-	.category-banner {
-		font-size: 2rem; /* Adjust font size for tablets */
-		letter-spacing: 0.3rem; /* Adjust letter spacing for smaller screens */
-	}
 }
 
 .category-banner span {
@@ -541,7 +458,6 @@ h1, h2, h3, h4, h5 {
     transform: translateX(-50%);
     white-space: nowrap;
 }
-
 
 /* FAQ */
 .question-container {
@@ -560,94 +476,77 @@ h1, h2, h3, h4, h5 {
 }
 
 .answer {
-	margin-top: 10px;
+	margin-top: var(--space-sm);
 }
 
 .qarrow {
 	display: flex;
 	transform: rotate(-90deg);
 	justify-content: center;
-	transition: .2s;
+	transition: var(--transition-normal);
 }
 
 /* SENDY */
-@media all and (max-width: 980px) {
-	#email.sendy {
-		width: 100% !important;
-		margin: 0 !important;
-	}
-
-	#submit.sendy {
-		width: 100% !important;
-		margin-top: 10px;
-		margin-left: 0 !important;
-		background: #2333b2 !important;
-	}
-	#email.sendy.footer {
-		margin:0 !important;
-	}
-}
-
 #email.sendy {
 	width: 100% !important;
 	height: 40px;
-	border-radius: 5px !important;
+	border-radius: var(--radius-md) !important;
 	border: none !important;
-	background-color: white;
+	background-color: var(--color-white);
 	font-size: 18px;
 	padding: 0 8px;
 	margin: 0;
-	transition: .2s
+	transition: var(--transition-normal);
 }
 
 #email.sendy:focus {
-	transition: .2s
+	transition: var(--transition-normal);
 }
 
 #submit.sendy {
-	box-shadow: 0px 5px 0px 0px #2333b2;
-	background: #334aff;
+	box-shadow: 0px 5px 0px 0px var(--color-primary-dark);
+	background: var(--color-primary);
 	border-radius: 25px;
-	border-color: #2333b2;
+	border-color: var(--color-primary-dark);
 	border-width: 2px;
 	font-size: 22px;
-	color: white;
+	color: var(--color-white);
 	font-weight: 700;
-	padding: 10px 50px;
+	padding: var(--space-sm) 50px;
 	cursor: pointer;
-	transition: .2s;
+	transition: var(--transition-normal);
 	border-style: solid;
 }
 
 #submit.sendy:hover {
-	box-shadow: 0px 0px 0px 0px #2333b2;
-	transition: .2s;
+	box-shadow: 0px 0px 0px 0px var(--color-primary-dark);
+	transition: var(--transition-normal);
 }
 
 #submit.sendy.footer {
-	background: #334aff;
-	border-radius:5px;
+	background: var(--color-primary);
+	border-radius: var(--radius-md);
 	box-shadow:none;
 	border:none;
-	color:white;
+	color: var(--color-white);
 }
 
 #submit.sendy.footer:hover {
-	background: #5c6eff !important;
+	background: var(--color-primary-light) !important;
 }
 
 #email.sendy.footer {
-	margin:0 15px;
+	margin:0 var(--space-md);
 }
 
 /* Sendy Styles for Event Partner Pages */
 .ep.sendy {
 	width: 100% !important;
 	height: 50px;
-	border-radius: 5px !important;
+	border-radius: var(--radius-md) !important;
 	border: 1px solid #acacae !important;
-	background-color: #f8f8fb;
-	color: black;
+	background-color: var(--color-gray-lighter);
+	color: var(--color-black);
 	font-size: 18px;
 	padding: 0 8px;
 	margin: 0;
@@ -660,200 +559,33 @@ h1, h2, h3, h4, h5 {
 }
 
 .ep-submit.sendy {
-	background: #334aff;
-	border-radius: 5px !important;
+	background: var(--color-primary);
+	border-radius: var(--radius-md) !important;
 	font-size: 22px;
-	color: white;
+	color: var(--color-white);
 	font-weight: 700;
-	padding: 10px 50px;
+	padding: var(--space-sm) 50px;
 	cursor: pointer;
-	transition: .2s;
+	transition: var(--transition-normal);
 	border-style: none;
 }
 
 .ep-submit.sendy:hover {
-	background-color: #2333b2;
+	background-color: var(--color-primary-dark);
 }
 
 .ep-container {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 15px;
+	gap: var(--space-md);
 }
 
 .ep-container input {
-	flex: 1 1 calc(50% - 15px);
-}
-
-@media (max-width: 980px) {
-	.ep-container input {
-		flex: 1 1 100%;
-	}
-}
-
-/* Gift Guide */
-#no-selection-message {
-	color: black;
-	text-align: center;
-	font-size: 20px;
-}
-
-/* Filter Buttons */
-.filter-btn {
-	padding: 10px 20px;
-	border: 1px solid #324aff; /* GCE blue border */
-	background-color: #f8f8f8; /* Neutral background */
-	color: #324aff; /* GCE blue text */
-	font-size: 1rem;
-	font-weight: bold;
-	border-radius: 4px; /* Smooth corners */
-	cursor: pointer;
-	transition: all 0.3s ease;
-	flex: 1 1 auto; /* Flexible width for stacking */
-	max-width: 150px; /* Optional: Limit button width */
-	box-sizing: border-box; /* Ensure padding is included in width */
-}
-
-	.filter-btn:hover {
-		background-color: #324aff; /* GCE blue */
-		color: #fff; /* White text for contrast */
-	}
-
-	.filter-btn.active {
-		background-color: #324aff; /* GCE blue */
-		color: #fff; /* White text */
-		border-color: #1a2238; /* Slightly darker blue for active state */
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-	}
-
-/* Filter Bar */
-#filter-bar {
-	display: flex;
-	gap: 10px; /* Space between buttons */
-	justify-content: center; /* Center-align buttons */
-	margin-bottom: 20px; /* Add space below filter bar */
-	flex-wrap: wrap; /* Allow buttons to stack when needed */
-	padding: 0 15px; /* Prevent buttons from touching the screen edge */
-	box-sizing: border-box; /* Include padding in container dimensions */
-}
-
-/* Responsive Adjustments */
-@media (max-width: 480px) {
-	#filter-bar {
-		gap: 5px; /* Reduce gap for smaller screens */
-	}
-
-	.filter-btn {
-		font-size: 0.9rem; /* Slightly smaller text on very small screens */
-		padding: 8px 15px; /* Adjust padding for smaller buttons */
-		max-width: 100%; /* Allow buttons to span full width if needed */
-	}
-}
-
-#product-list {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px; /* Space between the items */
-	justify-content: space-between; /* Even spacing for remaining items */
-}
-
-.product-item {
-	flex: 1 1 calc(33.333% - 20px); /* Default: 33% width */
-	max-width: 50%; /* Limit the width to 50% */
-	box-sizing: border-box; /* Include padding and border in width/height */
-	padding: 0; /* Remove padding around the item */
-	background: none; /* Remove any background */
-	border: none; /* Remove any borders */
-	margin: 0; /* Eliminate any unwanted margin */
-	display: none; /* Hidden by default */
-}
-
-	.product-item.active {
-		display: flex !important; /* Ensure flex layout when active */
-		justify-content: center; /* Center the content horizontally */
-	}
-
-
-.product-card {
-	display: flex;
-	align-items: center;
-	gap: 20px;
-	width: 100%; /* Ensure it spans the container */
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-	background-color: #fff;
-}
-
-.card-photo {
-	width: 40%; /* Take up 40% of the container width */
-	height: auto; /* Maintain aspect ratio */
-	border-radius: 8px;
-	object-fit: cover; /* Ensures the image fills the area neatly */
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card-content {
-	flex: 1; /* Let the content fill the remaining space */
-	text-align: left; /* Align text to the left */
-}
-
-.card-headline {
-	font-size: 1.5rem;
-	margin-bottom: 10px;
-	color: #1a2238;
-}
-
-.card-copy {
-	font-size: 1rem;
-	margin-bottom: 20px;
-	color: #333;
-}
-
-.card-button {
-	padding: 10px 20px;
-	background-color: #324aff;
-	color: #fff;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 1rem;
-	transition: background-color 0.3s ease;
-}
-
-	.card-button:hover {
-		background-color: #1a2238;
-	}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-	#product-list {
-		flex-direction: column; /* Force items into a single column */
-	}
-
-	.product-item {
-		flex: 1 1 100%; /* Full width for each card */
-		max-width: 100%; /* Ensure no extra spacing issues */
-	}
-
-	.product-card {
-		flex-direction: column; /* Stack image and content vertically */
-		text-align: center; /* Center-align content for mobile */
-		padding-bottom:37px;
-	}
-
-	.card-photo {
-		width: 100%; /* Full width for the image */
-		margin-bottom: 20px; /* Add space between image and text */
-	}
-
-	.card-content {
-		text-align: center; /* Center the text */
-	}
+	flex: 1 1 calc(50% - var(--space-md));
 }
 
 /* PLUGIN STYLES */
+
 /* Smart Slider */
 div#n2-ss-2 .n2-style-785355f374be86c332d4665aae819858-dot.n2-active,
 div#n2-ss-2 .n2-style-785355f374be86c332d4665aae819858-dot:hover,
@@ -861,13 +593,12 @@ div#n2-ss-2 .n2-style-785355f374be86c332d4665aae819858-dot:focus,
 div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot.n2-active,
 div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:hover,
 div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
-	/*background: #EA5072 !important;*/
-	background:white !important;
+	background: var(--color-white) !important;
 }
 
 /* The Events Calendar */
 .tribe-community-events a {
-	color: black;
+	color: var(--color-black);
 }
 
 .tribe-events-calendar-list__event-featured-image, .tribe-events-calendar-day__event-featured-image {
@@ -882,7 +613,7 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 }
 
 .tribe-related-event-info {
-	padding: 0 22px 10px 22px !important;
+	padding: 0 var(--space-xl) var(--space-sm) var(--space-xl) !important;
 }
 
 .tribe-events button, .tribe-events a {
@@ -890,18 +621,18 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 }
 
 .tribe-community-events {
-	color:black !important;
+	color: var(--color-black) !important;
 }
 
 .tribe-button, .tribe-button-secondary, #tribe-add-exclusion {
-	background-color: #334aff !important;
-	border-radius: 5px !important;
+	background-color: var(--color-primary) !important;
+	border-radius: var(--radius-md) !important;
 	font-size: 16px !important;
 	font-weight: bold !important;
-	padding: 15px 25px !important;
+	padding: var(--space-md) 25px !important;
 	border: none !important;
 	text-transform: capitalize !important;
-	color:white !important;
+	color: var(--color-white) !important;
 }
 
 .recurrence-row button > span {
@@ -910,16 +641,16 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 }
 
 .tribe-button:hover, .tribe-button-secondary:hover, .recurrence-row button:hover, #event_image:hover, #tribe-add-exclusion:hover {
-	background-color: #5c6eff !important;
+	background-color: var(--color-primary-light) !important;
 }
 
 .tribe-community-events-content .tribe-nav .my-events-display-options a.tribe-button-tertiary {
-	color: white !important;
-	background-color:#2333b2 !important
+	color: var(--color-white) !important;
+	background-color: var(--color-primary-dark) !important
 }
 
 .tribe-community-events-content .tribe-nav .my-events-display-options a.tribe-button-tertiary:hover {
-	background-color: #2a3dd8 !important
+	background-color: var(--color-primary-medium) !important
 }
 
 .table-menu-wrapper.ce-top::after {
@@ -928,7 +659,7 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 
 .select2-container--default .select2-results__option--highlighted[aria-selected], .tribe-filter-bar-c-filter__toggle, .tribe-common-b1, .tribe-common-b2--min-medium {
 	background-color: rgba(0,0,0,0) !important;
-	color: black !important;
+	color: var(--color-black) !important;
 	outline: none !important;
 }
 
@@ -946,12 +677,12 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 
 .tribe-events-calendar-series-archive__container, .tec-events-pro-series-meta-detail--link a {
 	pointer-events: none;
-	color: black !important;
+	color: var(--color-black) !important;
 }
 
 .tribe-events ol, ul {
 	list-style: disc !important;
-	margin: 0 0 22px 22px;
+	margin: 0 0 var(--space-xl) var(--space-xl);
 }
 
 .tribe-events-c-top-bar__nav-list, .tribe-events-c-view-selector__list-item {
@@ -964,74 +695,15 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 }
 
 .small-button .smallblue a {
-	background: #5c6eff !important;
-	color:white !important;
+	background: var(--color-primary-light) !important;
+	color: var(--color-white) !important;
 }
 
 .tribe-common--breakpoint-medium .tribe-filter-bar--horizontal.tribe-filter-bar .tribe-filter-bar__filters-slider-container {
 	padding: 3px;
 }
 
-/* Divi Events Module */
-.ecs-events-list-separator-month::after {
-	background-color: #d5d5d5;
-}
-
-.decm_venue::after, .decm_date::after {
-	/*Creates line-break after venue name*/
-	content: "\a";
-	white-space: pre;
-}
-
-.decm_date {
-	font-weight:bold;
-	margin-bottom:10px;
-}
-
-#eventdeets .decm_date {
-	font-weight:400 !important;
-}
-
-.decm-filter-catrgory-checkbox, .dec-order-list, .dec-organizer-list, .decm-event-results-message {
-	color: black;
-	font-size: 16px;
-}
-
-.decm_organizer_weburl a, span.decm_weburl a {
-	color: #334aff !important;
-}
-
-.ecs-event-description {
-	color:black;
-}
-
-.ecs-event-description ul, .ecs-event-description ol {
-	padding-top: 0 !important;
-	margin-top: 0 !important;
-}
-
-.ecs-event-description a {
-	color: #334aff !important;
-}
-
-.phone-number-mobile a {
-	color: #334aff !important;
-}
-
-.diec_event_page_3_tb_body .ecs-categories a {
-	color: #334aff !important;
-}
-
-@media all and (max-width: 980px) {
-	div .event-display_style > div {
-		margin-bottom:0 !important;
-	}
-}
-
 .event-featured-image img {
-	/*position: absolute;
-	top: 0;
-	left: 0;*/
 	width: 100%;
 	height: 100% !important;
 	min-height:250px;
@@ -1048,772 +720,9 @@ div#n2-ss-3 .n2-style-785355f374be86c332d4665aae819858-dot:focus {
 	justify-content: center;
 }
 
-/* WooCommerce */
-/* CSS for WooCommerce Product Image and Responsive Square Container */
-/* Main product image inside the gallery */
-.woocommerce div.product div.images img {
-	width: 100%;
-	height: auto; /* Keep the main product image full size */
-	object-fit: cover; /* Make sure the image covers the container */
-}
-
-/* Style the thumbnails to keep their aspect ratio and size */
-.woocommerce div.product div.thumbnails img {
-	width: auto; /* Thumbnails can size themselves */
-	height: auto; /* Maintain aspect ratio */
-	object-fit: contain; /* Ensure the thumbnail fits without stretching */
-}
-
-/* Ensure that the featured image is untouched */
-.woocommerce-product-gallery__image {
-    margin: 0 !important; /* Remove any margin */
-    padding: 0 !important; /* Remove any padding */
-    box-shadow: none !important; /* No shadows on the featured image */
-}
-
-/* Main gallery image container (flex-viewport) - specific to WooCommerce product gallery */
-.et_pb_wc_images .flex-viewport {
-	box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.22) !important; /* Add shadow to the main gallery image container */
-	padding: 0px !important; /* Add padding to create space inside the container */
-	background-color: #fff !important; /* Add a background for better contrast */
-	margin-bottom: 20px !important; /* Add space between main image and other elements */
-}
-
-/* Individual gallery images within the gallery */
-.et_pb_wc_images .woocommerce-product-gallery__image img {
-    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.22) !important; /* Add shadow to individual gallery images */
-    border-radius: 0px; /* Optional: Add rounded corners */
-}
-
-/* Thumbnails container (no shadow, transparent) */
-.et_pb_wc_images .flex-control-nav.flex-control-thumbs {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    padding: 0px !important;
-    background-color: transparent !important;
-    box-shadow: none !important; /* No shadow on the container */
-}
-
-/* Add box-shadow to the active thumbnail */
-.et_pb_wc_images .flex-control-nav.flex-control-thumbs li .flex-active {
-    border-radius: 5px !important; /* Rounded corners for the active thumbnail */
-    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.22) !important; /* Shadow for the active thumbnail */
-    transition: box-shadow 0.3s ease !important; /* Smooth transition on hover */
-}
-
-/* Optional: Hover effect for thumbnails */
-.et_pb_wc_images .flex-control-nav.flex-control-thumbs li img:hover {
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2) !important; /* Stronger shadow on hover */
-}
-
-.zoomImg {
-	max-width: 100%;
-	max-height: 100%;
-	opacity: 1 !important; /* Ensure visibility */
-	object-fit: contain; /* Ensure the image stays within the container */
-	transform: none; /* Remove any unwanted transformations */
-	width: 100%; /* Ensure it scales within the container */
-	height: auto; /* Maintain aspect ratio */
-}
-
-/* Hide the dropdown */
-.variations .value select {
-    display: none !important; /* Hide only the dropdown */
-}
-
-/* Hide the specific span with the data attribute */
-.variations .value span {
-    display: none !important; /* Hide the problematic span */
-}
-
-/* Ensure the caret is hidden */
-.variations .value::before,
-.variations .value::after {
-    display: none !important; /* Hide any pseudo-elements (like a caret) */
-}
-
-/* Keep the container visible for the buttons */
-.size-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-/* Default button style */
-.size-buttons button {
-    background-color: #e0e0e0; /* Soft gray for the unselected buttons */
-    border: 1px solid #ccc;
-    color: #333;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Button on hover */
-.size-buttons button:hover {
-    background-color: #666666; /* Darker gray on hover */
-    color: #fff;
-    border-color: #444444; /* Darker border on hover */
-}
-
-/* Selected (active) button */
-.size-buttons button.active {
-    background-color: #3a3d8f; /* Muted blue for selected state */
-    color: #fff;
-    border-color: #334aff; /* Keeps the blue consistent with your site */
-}
-
-
-.reset_variations {
-	display:none !important;
-}
-
-/* Target the size label specifically */
-.variations .label label {
-	font-size: 18px; /* Adjust the font size */
-	font-weight: bold; /* Make the label bold */
-	color: #333; /* Change the text color */
-	margin-bottom: 0px; /* Add some space below the label */
-	display: block; /* Ensure it takes up the full width */
-}
-
-/* Style the quantity wrapper */
-.quantity {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between elements */
-    font-size: 16px;
-}
-
-/* Style the quantity input */
-.et_pb_wc_add_to_cart .quantity input.qty {
-	border: 1px solid #ccc !important;
-}
-
-.quantity input.qty {
-	width: 75px !important; /* Increase width further for multi-digit numbers */
-	max-width: 75px !important;
-	padding: 10px;
-	background-color: #f5f5f5; /* Neutral background */
-	text-align: center; /* Center the quantity number */
-	font-size: 16px;
-	color: #333;
-	border-radius: 4px;
-	outline: none;
-	transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Style the quantity input on focus */
-.quantity input.qty:focus {
-    border-color: #666666 !important; /* Darker border when focused */
-    background-color: #e0e0e0; /* Slightly darker background on focus */
-}
-
-/* Ensure up/down arrows remain visible */
-.quantity input.qty[type="number"] {
-    -webkit-appearance: none; /* Disable default browser appearance */
-    -moz-appearance: textfield; /* Disable default appearance for Firefox */
-    appearance: none;
-}
-
-/* Add custom styles for the up/down buttons */
-.quantity input.qty::-webkit-inner-spin-button {
-    width: 20px; /* Adjust size of the spin button */
-}
-
-.quantity input.qty::-webkit-outer-spin-button {
-    width: 20px;
-}
-
-.qty-label {
-	font-size: 16px; /* Adjust label font size */
-	color: #333; /* Matching the rest of your design */
-	font-weight: bold;
-	display: block; /* Ensures it's on a new line */
-	text-align: left; /* Centers the label above the input */
-	margin-bottom: 5px;
-}
-
-/* Stock label */
-.woocommerce-variation-availability {
-	min-height: 20px; /* Adjust height based on the stock message's size */
-	display: block;
-}
-
-.stock {
-    margin-bottom: 5px; /* Add space between stock status and QTY input */
-    font-size: 14px;
-    font-weight: bold;
-    color: #333 !important; /* General color for text */
-}
-
-.stock.in-stock {
-    color: green; /* Color for "in stock" message */
-}
-
-.stock.out-of-stock {
-    color: red; /* Color for "out of stock" message */
-}
-
-.woocommerce-variation-availability {
-	display: none !important;
-}
-
-/* Sizing Chart Styles */
-#size_chart {
-    max-width: 100%;
-    margin: 20px 0;
-}
-
-#size_chart h2 {
-    font-size: 1.5em;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-#size_chart table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-#size_chart th, #size_chart td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
-}
-
-#size_chart th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-#size_chart .product_measurements {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-#size_chart .product_measurements h4 {
-    font-size: 1.2em;
-    margin-bottom: 5px;
-}
-
-#size_chart .product_measurements p {
-    margin: 0;
-}
-
-@media (min-width: 768px) {
-    #size_chart .product_measurements {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    #size_chart .product_measurements div {
-        width: 30%;
-    }
-}
-
-/*** Shopping Cart Styles ***/
-/* General cart table styling */
-.woocommerce table.shop_table {
-	width: 100%;
-	border-collapse: collapse;
-	font-family: 'Your GCE Font', sans-serif;
-	background-color: #fff;
-	box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1); /* Light shadow for the cart table */
-}
-
-	/* Table header styling */
-	.woocommerce table.shop_table thead th {
-		padding: 15px;
-		background-color: #f7f7f7; /* Light background for table header */
-		text-align: left;
-		font-weight: bold;
-		font-size: 16px;
-		border-bottom: 2px solid #ececec; /* Separate header from table content */
-	}
-
-	/* Table rows */
-	.woocommerce table.shop_table tbody tr {
-		border-bottom: 1px solid #ececec;
-	}
-
-	.woocommerce table.shop_table tbody td {
-		padding: 15px;
-		font-size: 16px; /* Product text size */
-		color: #000; /* Product text color */
-	}
-
-	/* Ensure product links are black */
-	.woocommerce table.shop_table a {
-		color: #000 !important; /* Force links in product names to be black */
-		text-decoration: none; /* Remove underline from links */
-	}
-
-	/* Product image */
-	.woocommerce table.shop_table .product-thumbnail img {
-		width: 75px;
-		height: auto;
-		border-radius: 5px; /* Optional: rounded corners */
-	}
-
-	/* Quantity input */
-	.woocommerce table.shop_table .product-quantity input.qty {
-		width: 60px;
-		padding: 5px;
-		border: 1px solid #ddd;
-		text-align: center;
-		font-size: 14px;
-		color: #333;
-		background-color: #fafafa; /* Light background */
-	}
-
-	/* Remove item button */
-	.woocommerce table.shop_table .product-remove a {
-		color: #FF6A3D; /* Use GCE accent color */
-		font-size: 20px;
-	}
-
-/* Subtotal and totals */
-.woocommerce .cart-collaterals h2 {
-	font-size: 18px;
-	font-weight: bold;
-	color: #333;
-	border-bottom: 2px solid #ececec;
-	padding-bottom: 10px;
-	margin-bottom: 15px;
-}
-
-.woocommerce table.shop_table_responsive tr td {
-	padding: 15px;
-	font-size: 14px;
-}
-
-	.woocommerce table.shop_table_responsive tr td strong {
-		font-size: 16px;
-		color: #333;
-	}
-
-/* Ensure buttons, inputs, and fields have equal heights */
-.woocommerce .woocommerce-cart-form .coupon input[type="text"],
-.woocommerce-shipping-calculator input.input-text {
-	height: 45px !important; /* Set uniform height */
-	padding: 0 10px !important; /* Ensure proper padding */
-	font-size: 14px;
-	border-radius: 5px;
-	background-color: #fafafa !important; /* Keep original input background color */
-	color: #333 !important; /* Keep original text color */
-	border: 1px solid #ccc !important; /* Add solid border */
-}
-
-.woocommerce .woocommerce-cart-form .coupon button,
-.woocommerce button[name="update_cart"],
-a.button.wc-backward,
-.woocommerce-shipping-calculator button[name="calc_shipping"] {
-	height: 45px !important; /* Set uniform height */
-	padding: 0 20px !important; /* Equalize padding */
-	font-size: 16px !important; /* Updated font-size */
-	font-weight: 500 !important; /* Updated font-weight */
-	border-radius: 5px;
-	background-color: #1a2238 !important; /* Dark button color */
-	color: #fff !important;
-	border: none !important;
-	transition: background-color 0.3s ease !important; /* Add smooth hover transition */
-	display: inline-block;
-	text-align: center; /* Center text inside the button */
-	line-height: 45px !important; /* Vertically center the text */
-	cursor: pointer;
-}
-
-	/* Hover effect - lighten button on hover */
-	.woocommerce button.button:hover,
-	a.button.wc-backward:hover,
-	.woocommerce .wc-proceed-to-checkout a.checkout-button:hover,
-	.woocommerce-shipping-calculator button[name="calc_shipping"]:hover {
-		background-color: #2a3450 !important; /* Lighter shade on hover */
-		color: #fff !important; /* Keep text color white on hover */
-		transition: background-color 0.3s ease, color 0.3s ease !important; /* Smooth transition for background and text color */
-	}
-
-	/* Remove all hover icons on buttons */
-	.woocommerce button.button:after,
-	a.button.wc-backward:after,
-	.woocommerce-shipping-calculator button[name="calc_shipping"]:after {
-		display: none !important; /* Remove hover icon in Divi */
-		content: '' !important; /* Ensure no pseudo-element remains */
-		margin: 0 !important; /* Prevent spacing for hidden icon */
-	}
-
-/* Proceed to checkout button */
-.woocommerce .wc-proceed-to-checkout a.checkout-button {
-	background-color: #1a2238 !important; /* Dark button color */
-	color: #fff !important;
-	padding: 7px 30px !important; /* Full-width for proceed to checkout */
-	border-radius: 5px;
-	font-size: 18px !important; /* Updated font-size */
-	font-weight: 500 !important; /* Updated font-weight */
-	width: 100% !important; /* Full-width for proceed to checkout */
-	text-align: center;
-	display: inline-block;
-	border: none !important; /* No borders */
-	transition: background-color 0.3s ease, color 0.3s ease !important; /* Smooth hover transition */
-	position: relative; /* Ensure no hover icon space */
-}
-
-	/* Remove hover icon for checkout button */
-	.woocommerce .wc-proceed-to-checkout a.checkout-button:after {
-		display: none !important;
-		content: '' !important; /* Prevent pseudo-element from affecting layout */
-		margin: 0 !important;
-	}
-
-/* General WooCommerce message styling */
-.woocommerce-message {
-	margin-bottom: 10px !important; /* Add space between most alerts */
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 15px;
-	width: 100%;
-	background-color: #5a9bd8 !important;
-	color: #fff !important;
-	border-color: #5a9bd8 !important;
-}
-
-	/* Specific case: No margin-bottom for "added to cart" alert */
-	.woocommerce-message[role="alert"] {
-		margin-bottom: 0 !important; /* Remove bottom margin for added to cart alert */
-	}
-
-/* Ensure space between "removed from cart" and "your cart is empty" messages */
-.woocommerce-notices-wrapper .woocommerce-message + .woocommerce-info {
-	margin-top: 10px !important; /* Add space between "removed from cart" and "your cart is empty" */
-}
-
-/* View Cart button styling */
-.woocommerce-message .button {
-	background-color: #fff !important;
-	color: #1a2238 !important;
-	border: none !important;
-	padding: 10px 20px !important;
-	font-weight: 500;
-	transition: background-color 0.3s ease, color 0.3s ease;
-	text-align: center;
-	margin-left: auto !important;
-}
-
-	/* Remove hover icon effect */
-	.woocommerce-message .button:after {
-		content: none !important;
-		margin: 0 !important;
-	}
-
-	/* Button hover effect */
-	.woocommerce-message .button:hover {
-		background-color: #1a2238 !important;
-		color: #fff !important;
-	}
-
-/* Stack text and button on smaller screens */
-@media (max-width: 768px) {
-	.woocommerce-message {
-		flex-direction: column !important;
-		text-align: center;
-	}
-
-		.woocommerce-message .button {
-			margin-left: 0 !important;
-			margin-top: 10px !important;
-			width: 100% !important;
-		}
-}
-
-/* WooCommerce Error and Info Messages */
-.woocommerce-error,
-.woocommerce-info {
-	background-color: #5a9bd8 !important;
-	color: #fff !important;
-	border-color: #5a9bd8 !important;
-}
-
-/* Cart Empty Message Styling */
-.cart-empty.woocommerce-info {
-	margin-bottom: 10px !important;
-	background-color: #5a9bd8 !important;
-	color: #fff !important;
-	border-color: #5a9bd8 !important;
-	padding: 15px;
-	display: block;
-}
-
-/* Push "Undo?" link to the right */
-.woocommerce-message a.restore-item {
-	margin-left: auto !important;
-	color: #fff !important;
-	font-weight: 500;
-	text-decoration: underline;
-}
-
-/* Stack "Undo?" link on smaller screens */
-@media (max-width: 768px) {
-	.woocommerce-message a.restore-item {
-		margin-left: 0 !important;
-		margin-top: 10px !important;
-		width: 100% !important;
-	}
-}
-
-/*** Checkout Page Styles ***/
-/* Ensure the "Click here" link is underlined */
-.woocommerce-form-coupon-toggle .woocommerce-info a {
-    text-decoration: underline !important;
-    font-weight: 500;
-}
-
-/* General font styling for checkout page */
-.woocommerce-checkout {
-    font-size: 16px;
-    color: #333;
-}
-
-/* Headings */
-.woocommerce-checkout h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    border-bottom: 2px solid #ececec;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    margin-top: 20px; /* Added margin to avoid redundancy */
-}
-
-/* Form Labels */
-.woocommerce-checkout label {
-    font-size: 14px;
-    color: #333;
-}
-
-/* General input field styles */
-.woocommerce-checkout input[type="text"],
-.woocommerce-checkout input[type="email"],
-.woocommerce-checkout input[type="tel"],
-.woocommerce-checkout input[type="number"],
-.woocommerce-checkout textarea,
-.woocommerce-checkout select {
-    font-size: 16px !important;
-    color: #333 !important;
-    border: 1px solid #ddd !important;
-    padding: 10px !important;
-    border-radius: 5px !important;
-    background-color: #fafafa !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    height: 45px !important; /* Consistent height for all inputs */
-}
-
-/* Focus state for input fields and dropdown */
-.woocommerce-checkout input:focus,
-.woocommerce-checkout textarea:focus,
-.woocommerce-checkout select:focus {
-    border-color: #999 !important;
-    background-color: #fff !important;
-    outline: none !important;
-}
-
-/* Dropdown (select) styling for state field */
-.woocommerce-checkout select {
-    appearance: none !important;
-}
-
-/* Custom arrow for dropdown */
-.woocommerce-checkout select::after {
-    content: '▼' !important;
-    position: absolute !important;
-    right: 10px !important;
-    pointer-events: none !important;
-}
-
-/* Style the "Place Order" button */
-#place_order {
-    background-color: #1a2238 !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    border-radius: 5px !important;
-    font-size: 18px !important;
-    font-weight: 600 !important;
-    width: 100% !important;
-    text-align: center !important;
-    line-height: 45px !important;
-    margin-top: 20px !important;
-    transition: background-color 0.3s ease !important;
-    text-transform: capitalize !important;
-}
-
-/* Hover effect for buttons */
-#place_order:hover,
-.woocommerce-checkout button:hover,
-.woocommerce-checkout .button:hover {
-    background-color: #2a3450 !important;
-}
-
-/* Remove Divi icon on Place Order button */
-#place_order:after {
-    display: none !important;
-}
-
-/* Style the return to cart link */
-.tribe-checkout-backlink,
-.woocommerce-privacy-policy-link {
-    color: #0f1421 !important;
-    text-decoration: underline !important;
-    font-weight: 500;
-}
-
-/* Hover effect for links */
-.tribe-checkout-backlink:hover,
-.woocommerce-privacy-policy-link:hover {
-    text-decoration: underline;
-}
-
-/* Hide the Stripe Link modal trigger button */
-.wcpay-stripelink-modal-trigger {
-    display: none !important;
-}
-
-.stripe-gateway-stripelink-modal-trigger:hover {
-	/*background-color: none !important;*/
-}
-
-/* Center and set width for the payment method container */
-.woocommerce-checkout ul.payment_methods {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the container */
-    width: 100%;
-    padding: 0 !important;
-}
-
-.woocommerce-checkout .wc_payment_method.payment_method_stripe {
-    width: 95% !important; /* Set the container to 95% width */
-    margin: 15px auto 0 !important; /* Ensure it's centered */
-}
-
-/* Make the payment box take up full width within its container */
-.woocommerce-checkout .payment_box.payment_method_stripe {
-    width: 100% !important; /* Ensure full width inside parent */
-    padding: 15px !important; /* Keep the padding */
-}
-
-/* Remove bullets from payment method list */
-.woocommerce-checkout-payment ul.payment_methods,
-.woocommerce-checkout-payment ul.payment_methods li {
-    list-style: none !important;
-    padding-left: 0 !important;
-}
-
-/* Privacy policy text and place order button - match Stripe info width */
-.woocommerce-checkout .woocommerce-privacy-policy-text,
-.woocommerce-checkout .form-row.place-order {
-    width: 99% !important; /* Match the width of the payment method container */
-    margin: 0 auto !important; /* Center within the container */
-}
-
-/* Update Credit / Debit Card text */
-.woocommerce-checkout label[for="payment_method_stripe"] {
-    font-size: 18px !important; /* Make the text bigger */
-    font-weight: bold !important; /* Make it bold */
-    color: #000 !important; /* Set the text color to black */
-}
-
-/* Style the coupon form to be full width and stacked */
-.checkout_coupon .form-row {
-    width: 100% !important; /* Ensure both input and button are full width */
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-/* Style the coupon input */
-.checkout_coupon input.input-text {
-    width: 100% !important;
-    padding: 10px !important;
-    font-size: 16px !important;
-    border: 1px solid #ddd !important;
-    border-radius: 5px !important;
-    margin-bottom: 10px; /* Add space between input and button */
-}
-
-/* Style the Apply Coupon button */
-.checkout_coupon button[name="apply_coupon"] {
-    background-color: #1a2238 !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    border-radius: 5px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    text-align: center !important;
-    width: 100% !important; /* Make button full width */
-    line-height: 45px !important;
-    transition: background-color 0.3s ease !important;
-    text-transform: capitalize !important;
-}
-
-/* Hover effect for Apply Coupon button */
-.checkout_coupon button[name="apply_coupon"]:hover {
-    background-color: #2a3450 !important;
-}
-
-/* Clear any floats */
-.checkout_coupon .clear {
-    clear: both !important;
-}
-
-/* Checkout Table Styles - Make all text black and consistent */
-.shop_table.woocommerce-checkout-review-order-table th,
-.shop_table.woocommerce-checkout-review-order-table td,
-.shop_table.woocommerce-checkout-review-order-table label,
-.shop_table.woocommerce-checkout-review-order-table a {
-    color: #000000 !important; /* Set all text color to black */
-    font-size: 16px !important; /* Ensure all text is the same size */
-    font-weight: normal !important; /* Make text consistent in weight */
-}
-
-/* Ensure Product and Subtotal headings are bold */
-.shop_table.woocommerce-checkout-review-order-table th.product-name,
-.shop_table.woocommerce-checkout-review-order-table th.product-total {
-    font-weight: bold !important;
-}
-
-/* Ensure Subtotal, Coupon, Shipping, Tax, and Total are bold */
-.woocommerce-checkout-review-order-table .cart-subtotal th,
-.woocommerce-checkout-review-order-table .cart-discount th,
-.woocommerce-checkout-review-order-table .woocommerce-shipping-totals th,
-.woocommerce-checkout-review-order-table .tax-total th,
-.woocommerce-checkout-review-order-table .order-total th {
-    font-weight: bold !important;
-}
-
-/* Ensure product quantity and price are also consistent */
-.shop_table.woocommerce-checkout-review-order-table strong,
-.shop_table.woocommerce-checkout-review-order-table span.woocommerce-Price-amount {
-    color: #000000 !important; /* Set color to black */
-    font-size: 16px !important; /* Set to the same font size */
-    font-weight: normal !important; /* Normalize font weight */
-}
-
-/* Remove any specific color settings on links to ensure they are black */
-.shop_table.woocommerce-checkout-review-order-table a.woocommerce-remove-coupon, .woocommerce-terms-and-conditions-checkbox-text a {
-	color: #000000 !important; /* Force black color for coupon remove link */
-	text-decoration: underline !important; /* Optional: keep links distinguishable */
-}
-
 /* Ultimate Member */
 .um span, .um div {
-	color: black !important;
+	color: var(--color-black) !important;
 }
 
 .table-menu-wrapper.ce-top {
@@ -1821,30 +730,30 @@ a.button.wc-backward,
 }
 
 #um-submit-btn, #um_account_submit_general, #um_account_submit_password, #um_account_submit_delete {
-	background-color: #334aff !important;
+	background-color: var(--color-primary) !important;
 	font-size: 18px !important;
 }
 
 #um-submit-btn:hover {
-	background-color: #5c6eff !important;
+	background-color: var(--color-primary-light) !important;
 }
 
 .um-alt {
-	background-color: #2333b2 !important;
-	color: white !important;
+	background-color: var(--color-primary-dark) !important;
+	color: var(--color-white) !important;
 	font-size: 18px !important;
 }
 
 .um-alt:hover {
-	background-color: #2a3dd8 !important;
+	background-color: var(--color-primary-medium) !important;
 }
 
 .um-misc-ul li a {
-	color: #334aff !important;
+	color: var(--color-primary) !important;
 }
 
 .um-field-checkbox.active:not(.um-field-radio-state-disabled) i, .um-icon-android-radio-button-on {
-	color: #334aff !important;
+	color: var(--color-primary) !important;
 }
 
 .um-account-profile-link {
@@ -1856,9 +765,9 @@ a.button.wc-backward,
 }
 
 .um-form-field {
-	border-radius: 10px !important;
+	border-radius: var(--radius-xl) !important;
 	border: none !important;
-	background: #f8f8fb !important;
+	background: var(--color-gray-lighter) !important;
 }
 
 .um-form input[type="text"], .um-form input[type="password"], .um-form input[type="number"], .um-form input[type="tel"] {
@@ -1867,83 +776,83 @@ a.button.wc-backward,
 
 .um-center #um-submit-btn {
 	width: 100% !important;
-	margin-top:22px;
+	margin-top: var(--space-xl);
 }
 
 .um-center #um-submit-btn:hover {
-	background-color:#5c6eff !important;
+	background-color: var(--color-primary-light) !important;
 }
 
 /* Member Dashboard */
 .mktg-container {
 	display:flex;
 	flex-wrap:wrap;
-	gap:15px;
+	gap: var(--space-md);
 	align-items:flex-start;
 	justify-content:center;
 }
 
 .mktg-item {
 	flex:1 0 250px;
-	border: 1px solid #ddd;
-	border-radius:15px;
-	padding: 15px 22px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-2xl);
+	padding: var(--space-md) var(--space-xl);
 	max-width:300px;
 }
 
 /* CF7 */
 .wpcf7 a {
-	color: #334aff;
+	color: var(--color-primary);
 }
 
 .wpcf7 #sponsor-form input[type="text"], .wpcf7 #sponsor-form input[type="tel"], .wpcf7 #sponsor-form input[type="email"], .wpcf7 #sponsor-form textarea {
-	background-color: white;
+	background-color: var(--color-white);
 }
 
 .wpcf7 #sponsor-form select {
-	background-color:white;
+	background-color: var(--color-white);
 	height:150px;
 }
 
 .wpcf7 input[type="text"], .wpcf7 input[type="tel"], .wpcf7 input[type="email"], .wpcf7 input[type="url"] {
 	width: 90%;
 	height: 50px !important;
-	background-color: #f8f8fb;
+	background-color: var(--color-gray-lighter);
 	font-size: 18px;
-	margin: 5px 15px 10px 15px;
+	margin: var(--space-xs) var(--space-md) var(--space-sm) var(--space-md);
 	vertical-align: middle;
-	border-radius: 10px;
-	padding: 0 10px;
-	border: 1px solid #ddd;
+	border-radius: var(--radius-xl);
+	padding: 0 var(--space-sm);
+	border: 1px solid var(--color-border);
 }
 
 .wpcf7 input[type="date"], .wpcf7 select {
 	width: 90%;
 	height: 50px;
-	border-radius: 10px;
-	background-color: #f8f8fb;
-	border: 1px solid #ddd;
-	margin: 5px 15px 10px 15px;
-	padding-left: 10px;
+	border-radius: var(--radius-xl);
+	background-color: var(--color-gray-lighter);
+	border: 1px solid var(--color-border);
+	margin: var(--space-xs) var(--space-md) var(--space-sm) var(--space-md);
+	padding-left: var(--space-sm);
 }
 
 .wpcf7 textarea {
 	width: 90%;
 	height: 150px;
-	background-color: #f8f8fb;
+	background-color: var(--color-gray-lighter);
 	font-size: 18px;
-	margin: 5px 15px 10px 15px;
+	margin: var(--space-xs) var(--space-md) var(--space-sm) var(--space-md);
 	vertical-align: middle;
-	border-radius: 10px;
-	padding: 15px 10px;
-	border: 1px solid #ddd;
+	border-radius: var(--radius-xl);
+	padding: var(--space-md) var(--space-sm);
+	border: 1px solid var(--color-border);
 }
 
 .wpcf7 .cf7label {
 	margin-left:5%;
-	margin-top:10px;
+	margin-top: var(--space-sm);
 	text-align: left !important;
-	color: black;
+	color: var(--color-black);
 	font-size: 16px;
 }
 
@@ -1952,7 +861,7 @@ a.button.wc-backward,
 }
 
 .wpcf7 .alt {
-	background-color:white !important;
+	background-color: var(--color-white) !important;
 }
 
 #fpfeedback {
@@ -1966,26 +875,26 @@ a.button.wc-backward,
 }
 
 .codedropz-upload-handler a {
-	color:#334aff;
+	color: var(--color-primary);
 }
 
 .wpcf7 input[type="submit"] {
-	background-color: #334aff;
-	color: white;
+	background-color: var(--color-primary);
+	color: var(--color-white);
 	font-size: 22px;
 	font-weight: bold;
 	border: none;
-	padding: 5px 22px;
+	padding: var(--space-xs) var(--space-xl);
 	cursor: pointer;
 	max-height: 50px !important;
 	height: 50px !important;
-	border-radius: 5px;
-	transition: .2s;
+	border-radius: var(--radius-md);
+	transition: var(--transition-normal);
 }
 
 .wpcf7 input[type="submit"]:hover {
-	background-color:#5c6eff;
-	transition:.2s;
+	background-color: var(--color-primary-light);
+	transition: var(--transition-normal);
 }
 
 .wpcf7-spinner {
@@ -1996,107 +905,31 @@ a.button.wc-backward,
 	font-size: 14px !important;
 }
 
-@media all and (max-width: 980px) {
-	.wpcf7 input[type="submit"] {
-		margin: auto !important;
-		text-align: center;
-		font-size: 18px;
-		margin-left: 0;
-	}
-
-	.wpcf7 input[type="text"], .wpcf7 input[type="tel"], .wpcf7 input[type="email"], .wpcf7 select {
-		width: 100%;
-		margin-left: 0;
-	}
-
-	.wpcf7 textarea {
-		width: 100%;
-		margin-left: 0;
-	}
-}
-
-/* EVENT CSS */
-.summer_concert_series {
-    overflow: auto;
-    width: 100%;
-	font-size:16px;
-}
-
-.summer_concert_series a {
-	color: #334aff;
-}
-
-.summer_concert_series a::after {
-	background-image:none !important;
-}
-
-.summer_concert_series a:hover::after {
-	background-image:none !important;
-}
-
-.summer_concert_series table {
-    border: 1px solid #dededf;
-    height: 100%;
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border-spacing: 1px;
-    text-align: left;
-}
-
-.summer_concert_series caption {
-    caption-side: top;
-    text-align: left;
-}
-
-.summer_concert_series th {
-    border: 1px solid #dededf;
-    background-color: #1a2238;
-    color: #fff;
-    padding: 5px;
-}
-
-.summer_concert_series td {
-    border: 1px solid #dededf;
-    padding: 5px;
-}
-
-.summer_concert_series tr:nth-child(even) td {
-    background-color: #f8f8fb;
-    color: #000000;
-}
-
-.summer_concert_series tr:nth-child(odd) td {
-    background-color: #ffffff;
-    color: #000000;
-}
-
 /* Christmas Snow */
 .snowflake {
 	position: absolute;
-	top: -30px; /* Move snowflakes further above the viewport */
-	width: 15px;
-	height: 15px;
-	background: radial-gradient(circle, white 50%, transparent 50%);
+	top: -30px;
+	width: var(--space-md);
+	height: var(--space-md);
+	background: radial-gradient(circle, var(--color-white) 50%, transparent 50%);
 	opacity: 0.8;
 	animation: snow 10s linear infinite;
 	pointer-events: none;
 }
 
-/* Snowflake falling with a gentle sway */
 @keyframes snow {
 	0% {
-		transform: translateX(0) translateY(-30px); /* Start higher outside the viewport */
+		transform: translateX(0) translateY(-30px);
 		opacity: 1;
 	}
 
 	50% {
-		transform: translateX(10px) translateY(50vh); /* Sway slightly to the right */
+		transform: translateX(10px) translateY(50vh);
 		opacity: 0.9;
 	}
 
 	100% {
-		transform: translateX(-10px) translateY(100vh); /* Sway slightly to the left */
+		transform: translateX(-10px) translateY(100vh);
 		opacity: 0;
 	}
 }
@@ -2114,31 +947,27 @@ a.button.wc-backward,
 	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
 	aspect-ratio: 16/9 !important;
 	object-fit: cover !important;
-	border-radius: 22px;
-	margin-bottom: 22px;
+	border-radius: var(--radius-3xl);
+	margin-bottom: var(--space-xl);
 }
 
 .tribe-events-single-event-title {
-	margin: 15px auto;
+	margin: var(--space-md) auto;
 	line-height: 1em;
 }
 
-/* Remove add to calendar bullets */
 .tribe-events-c-subscribe-dropdown__list-item {
 	list-style: none !important;
 }
 
-/* Apply Nunito to the whole single event content */
 #tribe-events-content {
 	font-family: 'Nunito', sans-serif !important;
 }
 
-/* Fixes paragraph spacing */
 #tribe-events-content p {
-	margin-bottom:5px !important;
+	margin-bottom: var(--space-xs) !important;
 }
 
-/* Removes Bottom Margin & Padding from <p> Preceding Lists */
 #tribe-events-content p:has(+ ul),
 #tribe-events-content p:has(+ ol) {
 	margin-bottom: 0;
@@ -2147,13 +976,12 @@ a.button.wc-backward,
 
 .list-label {
 	font-weight:bold;
-	margin-bottom:5px;
+	margin-bottom: var(--space-xs);
 	padding:0;
 	font-size:18px;
-	color:black;
+	color: var(--color-black);
 }
 
-/* Specific sections (optional) */
 .tribe-events-single-event-title,
 .tribe-events-single-event-description,
 .event-info-box p,
@@ -2162,56 +990,41 @@ a.button.wc-backward,
 	font-family: 'Nunito', sans-serif !important;
 }
 
-/* Hide Event Series */
 .tribe-events-series-relationship-single-marker {
 	display: none !important;
 }
 
-/* Layout for the two columns */
 .tribe-events-columns {
 	display: flex;
 	justify-content: space-between;
-	gap: 20px;
+	gap: var(--space-lg);
 }
 
 .tribe-events-left-column {
-	flex: 0 0 60%; /* Left column occupies 60% */
+	flex: 0 0 60%;
 }
 
 .tribe-events-right-column {
-	flex: 0 0 40%; /* Right column occupies 40% */
+	flex: 0 0 40%;
 }
 
-/* Ensure responsive behavior on smaller screens */
-@media (max-width: 768px) {
-	.tribe-events-columns {
-		flex-direction: column;
-	}
-
-	.tribe-events-left-column,
-	.tribe-events-right-column {
-		flex: 1 1 100%;
-	}
-}
-
-/* Event Info Box Styles */
 .event-info-box {
-	background-color: #f8f8fb;
-	padding: 20px;
-	border-radius: 8px;
+	background-color: var(--color-gray-lighter);
+	padding: var(--space-lg);
+	border-radius: var(--radius-lg);
 	margin-bottom: 0;
-	color: #000;
+	color: var(--color-black);
 	font-size: 16px;
 }
 
 .eib-desktop p,
 .eib-mobile p {
-	margin-bottom: 5px !important;
+	margin-bottom: var(--space-xs) !important;
 	padding-bottom: 0 !important;
 }
 
 .event-info-box a {
-	color: #334aff;
+	color: var(--color-primary);
 	text-decoration: none;
 }
 
@@ -2219,26 +1032,11 @@ a.button.wc-backward,
 	text-decoration: underline;
 }
 
-/* Desktop/Mobile conditional display for event-info-box */
-@media (min-width: 980px) {
-	.eib-mobile {
-		display: none;
-	}
-}
-
-@media (max-width: 980px) {
-	.eib-desktop {
-		display: none;
-	}
-}
-
-/* Make sure the categories and event website stay inside the box */
 .tribe-events-right-column p {
-	margin-bottom: 5px;
+	margin-bottom: var(--space-xs);
 	padding-bottom: 0;
 }
 
-/* Style icons for date, time, location, organizer, phone, categories, and website */
 .icon-date:before,
 .icon-time:before,
 .icon-location:before,
@@ -2247,9 +1045,9 @@ a.button.wc-backward,
 .icon-categories:before,
 .icon-website:before {
 	font-family: ETmodules;
-	font-size: 20px;
-	color: #2a3dd8;
-	margin-right: 5px;
+	font-size: var(--space-lg);
+	color: var(--color-primary-medium);
+	margin-right: var(--space-xs);
 	vertical-align: top;
 }
 
@@ -2281,14 +1079,310 @@ a.button.wc-backward,
 	content: "\E02C";
 }
 
-/* Disable Event Notices */
 .tribe-events-notices {
 	display: none;
 }
 
-/* Mobile Styles for Screens 980px and Below */
+/* Monarch Buttons */
+.et_monarch .et_social_sidebar_networks {
+	z-index: 1;
+}
+
+/* ==========================================================================
+   SINGLE EVENT TEMPLATE STYLES
+   ========================================================================== */
+
+/* Featured Image Section */
+.template-featured-image-wrapper {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: var(--space-lg);
+	height: 400px;
+}
+
+.template-featured-image {
+	position: absolute;
+	width: 69vw;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.event-date-time-box {
+	font-size: 20px;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: var(--radius-xl);
+	overflow: hidden;
+	padding: var(--space-xl) 37px;
+	z-index: 1;
+	position: relative;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	margin-top: auto;
+	margin-right: auto;
+	margin-bottom: var(--space-xl);
+	backdrop-filter: blur(5px) saturate(180%);
+	color: var(--color-black);
+}
+
+/* Event Title */
+.tribe-events-single-event-title {
+	text-align: left;
+	font-size: 2.5rem;
+	margin-top: 50px;
+	margin-bottom: var(--space-2xl);
+	color: var(--color-black);
+}
+
+/* Main Content Container */
+.tribe-events-content-wrapper {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+/* Banner Ad Section */
+.event-banner-ad {
+	text-align: left;
+	margin: var(--space-sm) 0;
+}
+
+.event-banner-ad h3 {
+	font-weight: 700;
+	margin-bottom: var(--space-md);
+}
+
+.banner-divider {
+	margin: 0 0 25px;
+	border: none;
+	border-top: 1px solid var(--color-gray-lighter);
+}
+
+.event-banner-ad .banner-divider:last-child {
+	margin: 25px 0;
+}
+
+.banner-image {
+	width: 100%;
+	height: auto;
+}
+
+/* AdSense Section */
+.adsense-label {
+	font-size: 14px;
+	color: var(--color-gray-dark);
+	text-align: center;
+	margin-top: var(--space-lg);
+}
+
+.adsense-container {
+	margin: var(--space-xs) auto 25px;
+	text-align: center;
+}
+
+/* QR Code Section */
+.qr-code-wrapper {
+	margin-top: var(--space-lg);
+}
+
+.qr-code-instructions {
+	text-align: center;
+	margin-top: var(--space-sm);
+}
+
+/* Location Section */
+.event-location-info-wrapper {
+	width: 100%;
+	padding: var(--space-lg) 0;
+}
+
+.location-info {
+	text-align: left;
+	padding: 0;
+	margin: 0;
+}
+
+.location-info h2 {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.venue-name {
+	font-size: 16px;
+	color: var(--color-black);
+	margin-bottom: 0 !important;
+	padding-bottom: 0;
+}
+
+.venue-address {
+	font-size: 16px;
+	color: var(--color-primary);
+	margin: 0;
+}
+
+.venue-address a {
+	color: var(--color-primary);
+}
+
+.event-google-map {
+	width: 100%;
+	height: 400px;
+}
+
+/* Section Divider */
+.section-divider {
+	margin: 40px 0 25px;
+	border: none;
+	border-top: 1px solid var(--color-gray-lighter);
+}
+
+/* Upcoming Events Section */
+.tribe-upcoming-events-section {
+	padding: var(--space-lg) 0;
+}
+
+.tribe-upcoming-events-section h2 {
+	font-size: 24px;
+	text-align: center;
+	font-weight: 700;
+	color: var(--color-black);
+	margin-bottom: var(--space-md);
+}
+
+.upcoming-events-wrapper {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--space-lg);
+	align-items: stretch;
+}
+
+.upcoming-event-item {
+	flex: 1;
+	text-align: left;
+	border-radius: var(--radius-sm);
+	padding: var(--space-sm);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.upcoming-event-image {
+	width: 100%;
+	aspect-ratio: 4/3 !important;
+	object-fit: cover !important;
+	border-radius: var(--radius-sm);
+}
+
+.upcoming-event-item .event-details {
+	flex-grow: 1;
+	margin-top: var(--space-sm);
+}
+
+.upcoming-event-title-link {
+	text-decoration: none;
+}
+
+.upcoming-event-item h3 {
+	font-size: 20px;
+	margin: var(--space-sm) 0;
+	color: var(--color-black);
+	line-height: 1.1em;
+}
+
+.upcoming-event-item .event-details p {
+	font-size: 16px;
+	color: var(--color-black);
+	padding-bottom: 0;
+}
+
+.more-info-btn {
+	display: block;
+	width: 100%;
+	padding: var(--space-sm) var(--space-lg);
+	font-size: 22px;
+	font-weight: bold;
+	background-color: var(--color-primary);
+	color: var(--color-white);
+	text-decoration: none;
+	border-radius: var(--radius-sm);
+	text-align: center;
+	margin-top: var(--space-sm);
+	transition: background-color var(--transition-smooth);
+}
+
+.more-info-btn:hover {
+	background-color: var(--color-primary-light) !important;
+}
+
+/* ======================================
+   RESPONSIVE STYLES - CONSOLIDATED
+   ====================================== */
+
+/* Desktop Styles (768px and above) */
+@media (min-width: 768px) {
+	.site-title {
+		display: flex !important;
+	}
+
+	#wordmark-container {
+		display: none !important;
+	}
+}
+
+/* Desktop Styles (980px and above) */
+@media (min-width: 980px) {
+	.eib-mobile {
+		display: none;
+	}
+	
+	.et_social_inline_custom {
+		display: none !important;
+	}
+}
+
+/* Tablet/Mobile Styles (980px and below) */
 @media (max-width: 980px) {
-	/* Featured Image Full Width and No Border Radius */
+	#email.sendy {
+		width: 100% !important;
+		margin: 0 !important;
+	}
+
+	#submit.sendy {
+		width: 100% !important;
+		margin-top: var(--space-sm);
+		margin-left: 0 !important;
+		background: var(--color-primary-dark) !important;
+	}
+	
+	#email.sendy.footer {
+		margin:0 !important;
+	}
+	
+	.ep-container input {
+		flex: 1 1 100%;
+	}
+	
+	.wpcf7 input[type="submit"] {
+		margin: auto !important;
+		text-align: center;
+		font-size: 18px;
+		margin-left: 0;
+	}
+
+	.wpcf7 input[type="text"], 
+	.wpcf7 input[type="tel"], 
+	.wpcf7 input[type="email"], 
+	.wpcf7 select,
+	.wpcf7 textarea {
+		width: 100%;
+		margin-left: 0;
+	}
+	
+	.eib-desktop {
+		display: none;
+	}
+	
 	.tribe-events-pg-template {
 		padding-top: 0 !important;
 	}
@@ -2296,41 +1390,53 @@ a.button.wc-backward,
 	.template-featured-image-wrapper {
 		margin: 0;
 		padding: 0;
-		width: 100%;
+		width: 100vw;
 		height: 250px !important;
+		position: relative;
+		left: 50%;
+		right: 50%;
+		margin-left: -50vw;
+		margin-right: -50vw;
 	}
 
 	.template-featured-image {
-		width: 100vw !important;
-		left: 0;
+		width: 100%;
+		height: 100%;
 		border-radius: 0;
+		object-fit: cover;
+		position: absolute;
+		top: 0;
+		left: 0;
 		transform: none;
-		height: 250px;
+	}
+	
+	.event-date-time-box {
+		position: absolute;
+		bottom: var(--space-lg);
+		left: var(--space-lg);
+		margin: 0;
 	}
 
-	/* Event Title Full Width */
 	h1.tribe-events-single-event-title {
 		font-size: 2rem !important;
-		margin: 20px auto;
+		margin: var(--space-lg) auto;
 		padding: 0;
 		max-width: 85%;
 		text-align: left;
 	}
 
-	/* Info Box Full Width */
 	.event-info-box {
 		width: 100%;
 		max-width: 85%;
-		padding: 20px;
+		padding: var(--space-lg);
 		margin: 0 auto;
 		text-align: left;
 	}
 
-	/* Event Description Full Width */
 	.tribe-events-single-event-description {
 		width: 100%;
 		max-width: 85%;
-		margin: 20px auto;
+		margin: var(--space-lg) auto;
 		text-align: left;
 	}
 
@@ -2338,28 +1444,24 @@ a.button.wc-backward,
 		text-align: left;
 	}
 
-	/* QR Code Section Centered */
 	#qr-code-container {
 		text-align: center;
 		width: 100%;
 		max-width: 85%;
-		margin: 20px auto;
+		margin: var(--space-lg) auto;
+		margin-top: var(--space-xs) !important;
 	}
 
-	/* Hide instructions below the QR code on mobile */
-	#qr-code-container + p {
-		display:none;
+	.qr-code-instructions {
+		width: 100%;
+		max-width: 85%;
+		margin: 0 auto;
 	}
 
-	#qr-code-container {
-		margin-top:5px !important;
-	}
-
-	/* Map Full Width */
 	.event-location-info-wrapper {
 		width: 100%;
 		max-width: 85%;
-		padding: 20px 0;
+		padding: var(--space-lg) 0;
 		margin: 0 auto;
 		text-align: left;
 	}
@@ -2368,58 +1470,75 @@ a.button.wc-backward,
 		width: 100%;
 	}
 
-	/* Upcoming Events Stacked Vertically */
 	.upcoming-events-wrapper {
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: var(--space-lg);
 		max-width: 85%;
 		margin: 0 auto;
 	}
 
 	.upcoming-event-item {
 		width: 100%;
-		margin-bottom: 20px;
+		margin-bottom: var(--space-lg);
 	}
 
-	/* Keep "More Great Events in Grove City" centered */
 	.tribe-upcoming-events-section h2 {
 		text-align: center;
 	}
 
-	/* Move Add to Calendar on Mobile */
 	.tribe-common {
 		width: 100% !important;
 		margin: auto !important;
 	}
-}
-
-/* EVENT TICKETS PLUS */
-.event-tickets .tribe-tickets__rsvp-wrapper, .event-tickets .tribe-tickets__tickets-form {
-	margin: 0 0 22px !important;
-}
-
-@media (max-width: 980px) {
-	.event-tickets .tribe-tickets__rsvp-wrapper, .event-tickets .tribe-tickets__tickets-form {
-		margin: 22px auto !important;
-		max-width: 85% !important;
-	}
-}
-
-/* Monarch Buttons*/
-.et_monarch .et_social_sidebar_networks {
-	z-index: 1;
-}
-
-/* Hide Monarch share buttons by default */
-@media (max-width: 980px) {
+	
 	.et_social_inline_custom {
-		display: block !important; /* Show the buttons on mobile */
+		display: block !important;
 	}
 }
 
-@media (min-width: 980px) {
-	.et_social_inline_custom {
-		display: none !important; /* Hide the buttons on larger screens */
+/* Mobile Styles (768px and below) */
+@media (max-width: 768px) {
+	.global-menu-hamburger {
+		margin-left: var(--space-sm);
 	}
+	
+	.site-title {
+		display: none !important;
+	}
+
+	#wordmark-container {
+		display: flex !important;
+		position: absolute;
+		width: 100%;
+		margin: auto;
+	}
+	
+	.global-menu-container {
+		width: 100vw;
+		max-width: 100vw;
+	}
+	
+	.category-banner {
+		font-size: 2rem;
+		letter-spacing: 0.3rem;
+	}
+	
+	.tribe-events-columns {
+		flex-direction: column;
+	}
+
+	.tribe-events-left-column,
+	.tribe-events-right-column {
+		flex: 1 1 100%;
+	}
+}
+
+/* Top Bar Arrow Responsiveness */
+@media (max-width: 768px) {
+    #call-out-bar .et-pb-slider-arrows a.et-pb-arrow-prev,
+    #call-out-bar .et-pb-slider-arrows a.et-pb-arrow-next {
+        top: 50% !important;
+        transform: translateY(45%) !important;
+    }
 }

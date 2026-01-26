@@ -13,220 +13,101 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( '-1' );
 }
 
+// BANNER CONTROL: Set to true to enable banner, false to disable
+$show_banner = false;
+
 $events_label_singular = tribe_get_event_label_singular();
 $events_label_plural   = tribe_get_event_label_plural();
-
 $event_id = Tribe__Events__Main::postIdHelper( get_the_ID() );
 
 ?>
 
-<div id="tribe-events-content" class="tribe-events-single" style="width: 100%; padding: 0; margin: 0 auto; position: relative;">
+<div id="tribe-events-content" class="tribe-events-single">
 
-    <!-- Featured Image Wrapper with Date Box -->
+    <!-- Featured Image with Date Box -->
     <?php if ( has_post_thumbnail( $event_id ) ) : ?>
-        <div class="template-featured-image-wrapper" style="position: relative; width: 100%; display: flex; justify-content: center; margin-bottom: 20px; height:400px;">
+        <div class="template-featured-image-wrapper">
             <img
                 src="<?php echo esc_url( get_the_post_thumbnail_url( $event_id, 'full' ) ); ?>"
                 alt="<?php echo esc_attr( get_post_meta( get_post_thumbnail_id( $event_id ), '_wp_attachment_image_alt', true ) ); ?>"
                 class="template-featured-image"
-                style="position: absolute; width: 69vw; left: 50%; transform: translateX(-50%);"
             />
 
             <!-- Date and Time Box -->
-            <div class="event-date-time-box" style="
-                font-size: 20px;
-                background-color: rgba(255,255,255,0.8);
-                border-radius: 10px;
-                overflow: hidden;
-                padding: 22px 37px;
-                z-index: 1;
-                position: relative;
-                height: fit-content;
-                display:flex;
-                flex-direction:column;
-                margin-top:auto;
-                margin-right:auto;
-                margin-bottom:22px;
-                backdrop-filter: blur(5px) saturate(180%);
-                color:black;
-            ">
-                <strong><?php echo tribe_get_start_date( $event_id, false, 'l, F j, Y' ); // Display day of the week, followed by date ?></strong>
-                <?php echo tribe_get_start_time( $event_id ); // Display only the start time ?>
+            <div class="event-date-time-box">
+                <strong><?php echo tribe_get_start_date( $event_id, false, 'l, F j, Y' ); ?></strong>
+                <?php echo tribe_get_start_time( $event_id ); ?>
             </div>
         </div>
     <?php endif; ?>
 
-    <!-- Event Title after Featured Image -->
-    <h1 class="tribe-events-single-event-title" style="text-align: left; font-size: 2.5rem; margin-top: 50px; margin-bottom:28px; color: black;">
+    <!-- Event Title -->
+    <h1 class="tribe-events-single-event-title">
         <?php echo get_the_title( $event_id ); ?>
     </h1>
 
     <!-- Event Information Box for Mobile -->
     <div class="event-info-box eib-mobile">
-        <!-- Event Date -->
-        <p><span class="icon-date"></span> <?php echo tribe_get_start_date( $event_id, false, 'F j, Y' ); ?></p>
-
-        <!-- Event Start and End Time -->
-        <p><span class="icon-time"></span> <?php echo tribe_get_start_time( $event_id ); ?> - <?php echo tribe_get_end_time( $event_id ); ?></p>
-
-        <!-- Event Location (Correct Venue Link) -->
-        <?php if ( tribe_get_venue_id( $event_id ) ) : ?>
-            <p><span class="icon-location"></span> 
-                <a href="<?php echo esc_url( get_permalink( tribe_get_venue_id( $event_id ) ) ); ?>">
-                    <?php echo tribe_get_venue( $event_id ); ?>
-                </a>
-            </p>
-        <?php endif; ?>
-
-        <!-- Organizer (Correct Organizer Link) -->
-        <?php if ( tribe_get_organizer_id( $event_id ) ) : ?>
-            <p><span class="icon-organizer"></span>
-                <a href="<?php echo esc_url( get_permalink( tribe_get_organizer_id( $event_id ) ) ); ?>">
-                    <?php echo tribe_get_organizer( $event_id ); ?>
-                </a>
-            </p>
-        <?php endif; ?>
-
-        <!-- Phone Number (Clean Display) -->
-        <?php if ( tribe_get_phone( $event_id ) ) : ?>
-            <p><span class="icon-phone"></span> <?php echo tribe_get_phone( $event_id ); ?></p>
-        <?php endif; ?>
-
-        <!-- Categories -->
-        <?php 
-        $categories = get_the_terms( $event_id, 'tribe_events_cat' );
-        if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
-            <p><span class="icon-categories"></span>
-            <?php
-                $category_links = array();
-                foreach ( $categories as $category ) {
-                    $category_links[] = '<a href="' . esc_url( get_term_link( $category ) ) . '">' . esc_html( $category->name ) . '</a>';
-                }
-                echo implode( ', ', $category_links );
-            ?>
-            </p>
-        <?php endif; ?>
-
-        <!-- Event Website URL with Custom Text -->
-        <?php if ( tribe_get_event_website_url( $event_id ) ) : ?>
-            <p><span class="icon-website"></span>
-                <a href="<?php echo esc_url( tribe_get_event_website_url( $event_id ) ); ?>" target="_blank">
-                    View Event's Website
-                </a>
-            </p>
-        <?php endif; ?>
+        <?php echo render_event_info_box( $event_id ); ?>
     </div>
 
-    <!-- Nested container for the rest of the content to keep it constrained -->
-    <div class="tribe-events-content-wrapper" style="max-width: 1200px; margin: 0 auto;">
+    <!-- Main Content Container -->
+    <div class="tribe-events-content-wrapper">
+        
         <!-- Notices -->
         <?php tribe_the_notices() ?>
 
-        <!-- Event Content and Sidebar Columns -->
+        <!-- Two Column Layout -->
         <div class="tribe-events-columns">
-            <!-- Left Column: Event Description (60%) -->
+            
+            <!-- Left Column: Event Description -->
             <div class="tribe-events-left-column">
-
-                <!-- Display Event Description Once -->
                 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                     <?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
                     <div class="tribe-events-single-event-description tribe-events-content">
-                        <!-- This outputs the content only once -->
                         <?php the_content(); ?>
                     </div>
                     <?php do_action( 'tribe_events_single_event_after_the_content' ) ?>
-                </div> <!-- #post-x -->
+                </div>
 
                 <?php while ( have_posts() ) : the_post(); ?>
-                    <!-- Other event details or metadata can stay here -->
                     <?php if ( get_post_type() == Tribe__Events__Main::POSTTYPE && tribe_get_option( 'showComments', false ) ) comments_template() ?>
                 <?php endwhile; ?>
 
-                <!-- Cbus Apparel Banner Ad -->
-                <!--<div class="cbus-apparel-banner" style="text-align:left; margin: 10px 0;">
-                    <hr style="margin: 0 0 25px; border: none; border-top: 1px solid #f8f8f8;">
-                    <h3 style="font-weight:700; margin-bottom:15px;">Grab Your Grove City Gear Just in Time for Halloween!</h3>
-                    <a href="https://cbusapparel.com/products/grove-city-tower-of-terror-tees/?utm_source=gce&utm_medium=banner&utm_campaign=event-page" target="_blank" rel="noopener">
-                        <picture> -->
-                            <!-- Desktop 
-                            <source media="(min-width: 768px)" srcset="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-970x250-1.png"> -->
-                            <!-- Mobile 
-                            <source media="(max-width: 767px)" srcset="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-600x500-1.png"> -->
-                            <!-- Fallback 
-                            <img src="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-970x250-1.png" 
-                                 alt="Shop Grove City Tower of Terror Tees at Cbus Apparel" 
-                                 style="width:100%; height:auto;">-->
-                        <!-- </picture>
-                    </a>
-                    <hr style="margin: 25px 0; border: none; border-top: 1px solid #f8f8f8;">
-                </div>-->
+                <!-- Banner Ad (Controlled by $show_banner variable above) -->
+                <?php if ( $show_banner ) : ?>
+                    <div class="event-banner-ad">
+                        <hr class="banner-divider">
+                        <h3>Grab Your Grove City Gear Just in Time for Halloween!</h3>
+                        <a href="https://cbusapparel.com/products/grove-city-tower-of-terror-tees/?utm_source=gce&utm_medium=banner&utm_campaign=event-page" target="_blank" rel="noopener">
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-970x250-1.png">
+                                <source media="(max-width: 767px)" srcset="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-600x500-1.png">
+                                <img src="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-970x250-1.png" 
+                                     alt="Shop Grove City Tower of Terror Tees at Cbus Apparel" 
+                                     class="banner-image">
+                            </picture>
+                        </a>
+                        <hr class="banner-divider">
+                    </div>
+                <?php endif; ?>
 
-                <!-- This adds the Monarch buttons -->
+                <!-- Social Sharing -->
                 <?php echo do_shortcode('[et_social_share_custom]'); ?>
             </div>
 
-            <div class="tribe-events-right-column">         
+            <!-- Right Column: Event Info, Ads, QR Code -->
+            <div class="tribe-events-right-column">
+                
                 <!-- Event Information Box for Desktop -->
-                <div class="event-info-box  eib-desktop">
-                    <!-- Event Date -->
-                    <p><span class="icon-date"></span> <?php echo tribe_get_start_date( $event_id, false, 'F j, Y' ); ?></p>
-
-                    <!-- Event Start and End Time -->
-                    <p><span class="icon-time"></span> <?php echo tribe_get_start_time( $event_id ); ?> - <?php echo tribe_get_end_time( $event_id ); ?></p>
-
-                    <!-- Event Location (Correct Venue Link) -->
-                    <?php if ( tribe_get_venue_id( $event_id ) ) : ?>
-                        <p><span class="icon-location"></span> 
-                            <a href="<?php echo esc_url( get_permalink( tribe_get_venue_id( $event_id ) ) ); ?>">
-                                <?php echo tribe_get_venue( $event_id ); ?>
-                            </a>
-                        </p>
-                    <?php endif; ?>
-
-                    <!-- Organizer (Correct Organizer Link) -->
-                    <?php if ( tribe_get_organizer_id( $event_id ) ) : ?>
-                        <p><span class="icon-organizer"></span>
-                            <a href="<?php echo esc_url( get_permalink( tribe_get_organizer_id( $event_id ) ) ); ?>">
-                                <?php echo tribe_get_organizer( $event_id ); ?>
-                            </a>
-                        </p>
-                    <?php endif; ?>
-
-                    <!-- Phone Number (Clean Display) -->
-                    <?php if ( tribe_get_phone( $event_id ) ) : ?>
-                        <p><span class="icon-phone"></span> <?php echo tribe_get_phone( $event_id ); ?></p>
-                    <?php endif; ?>
-
-                    <!-- Categories -->
-                    <?php 
-                    $categories = get_the_terms( $event_id, 'tribe_events_cat' );
-                    if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
-                        <p><span class="icon-categories"></span>
-                        <?php
-                            $category_links = array();
-                            foreach ( $categories as $category ) {
-                                $category_links[] = '<a href="' . esc_url( get_term_link( $category ) ) . '">' . esc_html( $category->name ) . '</a>';
-                            }
-                            echo implode( ', ', $category_links );
-                        ?>
-                        </p>
-                    <?php endif; ?>
-
-                    <!-- Event Website URL with Custom Text -->
-                    <?php if ( tribe_get_event_website_url( $event_id ) ) : ?>
-                        <p><span class="icon-website"></span>
-                            <a href="<?php echo esc_url( tribe_get_event_website_url( $event_id ) ); ?>" target="_blank">
-                                View Event's Website
-                            </a>
-                        </p>
-                    <?php endif; ?>
+                <div class="event-info-box eib-desktop">
+                    <?php echo render_event_info_box( $event_id ); ?>
                 </div>
 
                 <!-- AdSense Section -->
-                <div style="font-size:14px; color:#666; text-align:center; margin-top:20px;">ADVERTISEMENT</div>
-                <div style="margin: 5px auto 25px; text-align: center;">
-                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1911840510612788"
-                         crossorigin="anonymous"></script>
+                <div class="adsense-label">ADVERTISEMENT</div>
+                <div class="adsense-container">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1911840510612788" crossorigin="anonymous"></script>
                     <ins class="adsbygoogle"
                          style="display:block"
                          data-ad-format="fluid"
@@ -239,109 +120,82 @@ $event_id = Tribe__Events__Main::postIdHelper( get_the_ID() );
                 </div>
 
                 <!-- QR Code Section -->
-                <div id="qr-code-container" title="Right Click to Download & Save This Event's QR Code" alt="Right Click to Download & Save This Event's QR Code" style="margin-top: 20px;"></div>
-
-                <!-- Instructional Text Below QR Code -->
-                <p style="text-align: center; margin-top: 10px;">Right Click to Download & Save This Event's QR Code</p>
+                <div id="qr-code-container" class="qr-code-wrapper" title="Right Click to Download & Save This Event's QR Code"></div>
+                <p class="qr-code-instructions">Right Click to Download & Save This Event's QR Code</p>
             </div>
 
         </div>
-    </div> <!-- Close constrained content container -->
+    </div>
 
-    <!-- New Row for Full-Width Location Info and Map -->
-    <div class="event-location-info-wrapper" style="width: 100%; padding: 20px 0;">
-        <div class="location-info" style="text-align: left; padding: 0; margin: 0;">
-            <h2 style="font-size: 22px; font-weight: bold;">Location</h2>
-
-            <!-- Display Venue Name -->
-            <p style="font-size: 16px; color: black; margin-bottom: 0 !important; padding-bottom:0;"><?php echo tribe_get_venue( $event_id ); ?></p>
-
-            <!-- Display Venue Address with Google Maps link -->
+    <!-- Location Section -->
+    <div class="event-location-info-wrapper">
+        <div class="location-info">
+            <h2>Location</h2>
+            <p class="venue-name"><?php echo tribe_get_venue( $event_id ); ?></p>
+            
             <?php 
-            $venue_address = strip_tags( tribe_get_full_address( $event_id ) ); // Strip HTML tags from the address
+            $venue_address = strip_tags( tribe_get_full_address( $event_id ) );
             if ( ! empty( $venue_address ) ) : ?>
-                <p style="font-size: 16px; color: #334aff; margin: 0;">
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=<?php echo urlencode( $venue_address ); ?>" target="_blank" style="color: #334aff;">
+                <p class="venue-address">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=<?php echo urlencode( $venue_address ); ?>" target="_blank">
                         <?php echo $venue_address; ?>
                     </a>
                 </p>
             <?php endif; ?>
         </div>
 
-        <!-- Display Google Map (full-width) -->
-        <div class="event-google-map" style="width: 100%; height: 400px;">
-            <?php echo tribe_get_embedded_map( $event_id ); // This displays the Google Map ?>
+        <div class="event-google-map">
+            <?php echo tribe_get_embedded_map( $event_id ); ?>
         </div>
     </div>
 
-    <!-- Divider before Upcoming Events -->
-    <hr style="margin: 40px 0 25px; border: none; border-top: 1px solid #f8f8f8;">
-
+    <!-- Section Divider -->
+    <hr class="section-divider">
 
     <!-- Upcoming Events Section -->
-    <div class="tribe-upcoming-events-section" style="padding: 20px 0;">
-        <h2 style="font-size: 24px; text-align: center; font-weight: 700; color: black; margin-bottom:15px;">More Great Events in Grove City</h2>
+    <div class="tribe-upcoming-events-section">
+        <h2>More Great Events in Grove City</h2>
 
-        <div class="upcoming-events-wrapper" style="display: flex; justify-content: space-between; gap: 20px; align-items: stretch;">
+        <div class="upcoming-events-wrapper">
             <?php
-            // Set up a query for the next 3 upcoming events
             $upcoming_events = tribe_get_events( [
-            'posts_per_page' => 3, // Limit to 3 events
-            'start_date'     => current_time( 'Y-m-d H:i:s' ), // Get events starting from now
-            'eventDisplay'   => 'list', // Use 'list' display for the upcoming events
-            'orderby'        => 'event_date', // Order by the event start date
-            'tax_query'      => array(
-                array(
-                    'taxonomy' => 'post_tag', // The taxonomy for tags
-                    'field'    => 'slug',
-                    'terms'    => array( 'ephh', 'specials' ), // The slugs of the tags to exclude
-                    'operator' => 'NOT IN', // Exclude events with this tag
+                'posts_per_page' => 3,
+                'start_date'     => current_time( 'Y-m-d H:i:s' ),
+                'eventDisplay'   => 'list',
+                'orderby'        => 'event_date',
+                'tax_query'      => array(
+                    array(
+                        'taxonomy' => 'post_tag',
+                        'field'    => 'slug',
+                        'terms'    => array( 'ephh', 'specials' ),
+                        'operator' => 'NOT IN',
+                    ),
                 ),
-            ),
-        ] );
+            ] );
+            
             if ( $upcoming_events ) : ?>
                 <?php foreach ( $upcoming_events as $event ) : ?>
-                    <div class="upcoming-event-item" style="flex: 1; text-align: left; border-radius: 4px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between;">
-                    
-                        <!-- Event Image -->
-                        <a href="<?php echo esc_url( get_permalink( $event->ID ) ); ?>">
-                            <?php echo get_the_post_thumbnail( $event->ID, 'full', array(
-                                'style' => 'width: 100%; aspect-ratio: 4/3 !important; object-fit: cover !important; border-radius: 4px;',
-                            ) ); ?>
+                    <div class="upcoming-event-item">
+                        <a href="<?php echo esc_url( get_permalink( $event->ID ) ); ?>" class="upcoming-event-image-link">
+                            <?php echo get_the_post_thumbnail( $event->ID, 'full', array('class' => 'upcoming-event-image') ); ?>
                         </a>
 
-                        <!-- Event Details -->
-                        <div class="event-details" style="flex-grow: 1; margin-top: 10px;">
-                            <!-- Clickable Event Title -->
-                            <a href="<?php echo esc_url( get_permalink( $event->ID ) ); ?>" style="text-decoration: none;">
-                                <h3 style="font-size: 20px; margin: 10px 0; color:black; line-height:1.1em;"><?php echo get_the_title( $event->ID ); ?></h3>
+                        <div class="event-details">
+                            <a href="<?php echo esc_url( get_permalink( $event->ID ) ); ?>" class="upcoming-event-title-link">
+                                <h3><?php echo get_the_title( $event->ID ); ?></h3>
                             </a>
-                            <p style="font-size: 16px; color:black; padding-bottom:0;"><strong>Date:</strong> <?php echo tribe_get_start_date( $event->ID, false, 'F j, Y' ); ?></p>
-                            <p style="font-size: 16px; color:black; padding-bottom:0;"><strong>Time:</strong> <?php echo tribe_get_start_time( $event->ID ); ?></p>
-                            <p style="font-size: 16px; color:black; padding-bottom:0;"><strong>Venue:</strong> <?php echo tribe_get_venue( $event->ID ); ?></p>
-                            <p style="font-size: 16px; color:black; padding-bottom:0;"><strong>Organizer:</strong> <?php echo tribe_get_organizer( $event->ID ); ?></p>
+                            <p><strong>Date:</strong> <?php echo tribe_get_start_date( $event->ID, false, 'F j, Y' ); ?></p>
+                            <p><strong>Time:</strong> <?php echo tribe_get_start_time( $event->ID ); ?></p>
+                            <p><strong>Venue:</strong> <?php echo tribe_get_venue( $event->ID ); ?></p>
+                            <p><strong>Organizer:</strong> <?php echo tribe_get_organizer( $event->ID ); ?></p>
 
-                            <!-- Conditionally display the price label only if there's a price -->
                             <?php $event_price = tribe_get_formatted_cost( $event->ID ); ?>
                             <?php if ( ! empty( $event_price ) ) : ?>
-                                <p style="font-size: 16px; color:black; padding-bottom:0;"><strong>Price:</strong> <?php echo $event_price; ?></p>
+                                <p><strong>Price:</strong> <?php echo $event_price; ?></p>
                             <?php endif; ?>
                         </div>
 
-                        <!-- More Info Button -->
-                        <a href="<?php echo esc_url( get_permalink( $event->ID ) ); ?>" class="more-info-btn" style="
-                            display: block;
-                            width: 100%;
-                            padding: 10px 20px;
-                            font-size: 22px;
-                            font-weight:bold;
-                            background-color: #334aff;
-                            color: white;
-                            text-decoration: none;
-                            border-radius: 4px;
-                            text-align: center;
-                            margin-top: 10px;
-                            transition: background-color 0.3s;">
+                        <a href="<?php echo esc_url( get_permalink( $event->ID ) ); ?>" class="more-info-btn">
                             More Info
                         </a>
                     </div>
@@ -352,11 +206,71 @@ $event_id = Tribe__Events__Main::postIdHelper( get_the_ID() );
         </div>
     </div>
 
-    <!-- CSS for Button Hover Effect -->
-    <style>
-        .more-info-btn:hover {
-            background-color: #5c6eff !important;
-        }
-    </style>
-
 </div><!-- #tribe-events-content -->
+
+<?php
+/**
+ * Helper function to render event info box content
+ * This eliminates duplication between mobile and desktop versions
+ */
+function render_event_info_box( $event_id ) {
+    ob_start();
+    ?>
+    
+    <!-- Event Date -->
+    <p><span class="icon-date"></span> <?php echo tribe_get_start_date( $event_id, false, 'F j, Y' ); ?></p>
+
+    <!-- Event Time -->
+    <p><span class="icon-time"></span> <?php echo tribe_get_start_time( $event_id ); ?> - <?php echo tribe_get_end_time( $event_id ); ?></p>
+
+    <!-- Venue -->
+    <?php if ( tribe_get_venue_id( $event_id ) ) : ?>
+        <p><span class="icon-location"></span> 
+            <a href="<?php echo esc_url( get_permalink( tribe_get_venue_id( $event_id ) ) ); ?>">
+                <?php echo tribe_get_venue( $event_id ); ?>
+            </a>
+        </p>
+    <?php endif; ?>
+
+    <!-- Organizer -->
+    <?php if ( tribe_get_organizer_id( $event_id ) ) : ?>
+        <p><span class="icon-organizer"></span>
+            <a href="<?php echo esc_url( get_permalink( tribe_get_organizer_id( $event_id ) ) ); ?>">
+                <?php echo tribe_get_organizer( $event_id ); ?>
+            </a>
+        </p>
+    <?php endif; ?>
+
+    <!-- Phone -->
+    <?php if ( tribe_get_phone( $event_id ) ) : ?>
+        <p><span class="icon-phone"></span> <?php echo tribe_get_phone( $event_id ); ?></p>
+    <?php endif; ?>
+
+    <!-- Categories -->
+    <?php 
+    $categories = get_the_terms( $event_id, 'tribe_events_cat' );
+    if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
+        <p><span class="icon-categories"></span>
+        <?php
+            $category_links = array();
+            foreach ( $categories as $category ) {
+                $category_links[] = '<a href="' . esc_url( get_term_link( $category ) ) . '">' . esc_html( $category->name ) . '</a>';
+            }
+            echo implode( ', ', $category_links );
+        ?>
+        </p>
+    <?php endif; ?>
+
+    <!-- Website -->
+    <?php if ( tribe_get_event_website_url( $event_id ) ) : ?>
+        <p><span class="icon-website"></span>
+            <a href="<?php echo esc_url( tribe_get_event_website_url( $event_id ) ); ?>" target="_blank">
+                View Event's Website
+            </a>
+        </p>
+    <?php endif; ?>
+    
+    <?php
+    return ob_get_clean();
+}
+?>
