@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // BANNER CONTROL: Set to true to enable banner, false to disable
-$show_banner = false;
+$show_banner = true;
 
 $events_label_singular = tribe_get_event_label_singular();
 $events_label_plural   = tribe_get_event_label_plural();
@@ -78,13 +78,13 @@ $event_id = Tribe__Events__Main::postIdHelper( get_the_ID() );
                 <?php if ( $show_banner ) : ?>
                     <div class="event-banner-ad">
                         <hr class="banner-divider">
-                        <h3>Grab Your Grove City Gear Just in Time for Halloween!</h3>
-                        <a href="https://cbusapparel.com/products/grove-city-tower-of-terror-tees/?utm_source=gce&utm_medium=banner&utm_campaign=event-page" target="_blank" rel="noopener">
+                        <h3>Stay Warm & Stylish in Grove City Gear!</h3>
+                        <a href="https://buy.stripe.com/9B64gAagddBT1fj02U2Fa00?utm_source=event-ad&utm_medium=banner&utm_campaign=winter-2026" target="_blank" rel="noopener">
                             <picture>
-                                <source media="(min-width: 768px)" srcset="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-970x250-1.png">
-                                <source media="(max-width: 767px)" srcset="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-600x500-1.png">
-                                <img src="https://grovecityevents.com/wp-content/uploads/2025/09/tower-of-terror-tees-banner-970x250-1.png" 
-                                     alt="Shop Grove City Tower of Terror Tees at Cbus Apparel" 
+                                <source media="(min-width: 768px)" srcset="https://grovecityevents.com/wp-content/uploads/2026/01/3d-hoodies-desktop-event-banner.png">
+                                <source media="(max-width: 767px)" srcset="https://grovecityevents.com/wp-content/uploads/2026/01/3d-hoodies-mobile-event-banner.png">
+                                <img src="https://grovecityevents.com/wp-content/uploads/2026/01/3d-hoodies-desktop-event-banner.png" 
+                                     alt="Shop Grove 3D Hoodies and Tees at CBus Apparel" 
                                      class="banner-image">
                             </picture>
                         </a>
